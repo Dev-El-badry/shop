@@ -39,6 +39,14 @@ class Mdl_store_accounts extends CI_Model {
 	return $query;
 	}
 
+    function get_double_where_custom($col1, $value1,$col2, $value2) {
+	$table = $this->get_table();
+	$this->db->where($col1, $value1);
+	$this->db->or_where($col2, $value2);
+	$query=$this->db->get($table);
+	return $query;
+	}
+
 	function _insert($data) {
 	$table = $this->get_table();
 	$this->db->insert($table, $data);

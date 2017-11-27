@@ -339,6 +339,13 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
+        <li class="">
+              <a href="<?php echo base_url(); ?>dashboard/home">
+                  <i class="fa fa-tachometer fa-fw"></i> Dashboard
+                 
+              </a>
+             
+          </li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-tags"></i> <span>Items Shop</span>
@@ -411,6 +418,18 @@
             <li><a href="<?= base_url() ?>store_category/create"><i class="fa fa-circle-o"></i> Create New Category</a></li>
           </ul>
         </li>
+         <li class="treeview">
+              <a href="#">
+                  <i class="fa fa-envelope fa-fw"></i> <span>Messages</span>
+                  <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+              </a>
+              <ul class="treeview-menu">
+                  <li class="active"><a href="<?= base_url() ?>enquiries/manage"><i class="fa fa-circle-o"></i> Manage Enquiries</a></li>
+                  <li><a href="<?= base_url() ?>enquiries/create"><i class="fa fa-circle-o"></i> Compose Message</a></li>
+              </ul>
+          </li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-files-o"></i>

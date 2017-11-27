@@ -19,10 +19,15 @@
 
     <!-- Custom styles for this template -->
     <link href="<?php echo base_url(); ?>css/jumbotron.css" rel="stylesheet">
+     <link href="<?php echo base_url(); ?>dist/css/font-awesome.min.css" rel="stylesheet">
+     <?php
+     if(isset($use_featherlight) AND $use_featherlight == TRUE) {
+     ?>
+     <link href="<?php echo base_url(); ?>dist/css/featherlight.min.css" rel="stylesheet">
+     <?php } ?>
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="<?php echo base_url(); ?>assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="<?php echo base_url(); ?>assets/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -50,23 +55,31 @@
           
           <?php echo Modules::run('store_category/_navbar_bootstrap'); ?>
 
-         
-
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
+ 
     <div class="container" style="min-height: 500px">
+     <?php
+            if(isset($customer_id)&&$customer_id>0) {
+              include_once('custom_top_nav.php');
+            }
+          ?>
+
       <?php
         if(isset($view_file)) {
+
              echo $this->load->view($module.'/'.$view_file);
+
         } elseif(isset($page_content)) {
 
-
+          
             if($page_url == "") {
                 require_once('homepage_content.php');
             } elseif($page_url == "contactus") {
                 echo Modules::run('contactus/_draw_form');
             }
+            
         }
             ?>
     </div>
@@ -86,5 +99,12 @@
     <script src="<?php echo base_url(); ?>dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="<?php echo base_url(); ?>assets/js/ie10-viewport-bug-workaround.js"></script>
+    <?php
+     if(isset($use_featherlight) AND $use_featherlight == TRUE) {
+     ?>
+    <script src="<?php echo base_url(); ?>dist/js/featherlight.min.js"></script>
+    <?php 
+  }
+    ?>
   </body>
 </html>

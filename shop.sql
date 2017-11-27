@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.6.6
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 04, 2017 at 05:02 PM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 7.0.15
+-- Host: localhost
+-- Generation Time: Nov 27, 2017 at 11:55 PM
+-- Server version: 5.7.17-log
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,6 +19,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `shop`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admins`
+--
+
+CREATE TABLE `admins` (
+  `id` int(11) NOT NULL,
+  `username` varchar(120) NOT NULL,
+  `first_name` varchar(120) NOT NULL,
+  `last_name` varchar(120) NOT NULL,
+  `email` varchar(225) NOT NULL,
+  `pword` varchar(225) NOT NULL,
+  `img` varchar(225) NOT NULL,
+  `adress1` varchar(225) NOT NULL,
+  `adress2` varchar(225) NOT NULL,
+  `telephone` varchar(225) NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -46,6 +66,143 @@ CREATE TABLE `blogs` (
 INSERT INTO `blogs` (`id`, `blog_url`, `blog_title`, `blog_keywords`, `blog_description`, `headline`, `blog_content`, `date_published`, `author`, `picture`) VALUES
 (1, 'Html-51-Relaesed', 'Html 5.1 Relaesed', 'html, development', 'Html 5.1 Relaesed', '', '<p>\r\n\r\n</p><h2>Abstract</h2><div><p>This specification defines the 5th major version, first minor revision of the core language of the World Wide Web: the Hypertext Markup Language (HTML). In this version, new features continue to be introduced to help Web application authors, new elements continue to be introduced based on research into prevailing authoring practices, and special attention continues to be given to defining clear conformance criteria for user agents in an effort to improve interoperability.</p></div><h2>Status of this document</h2><div><p><em>This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this technical report can be found in the <a target=\"_blank\" rel=\"nofollow\" href=\"https://www.w3.org/TR/\">W3C technical reports index</a> at <a target=\"_blank\" rel=\"nofollow\" href=\"https://www.w3.org/TR/\">https://www.w3.org/TR/</a>.</em></p><p>Errata for this document are <a target=\"_blank\" rel=\"nofollow\" href=\"https://github.com/w3c/html/issues\">recorded as issues</a>. The <a target=\"_blank\" rel=\"nofollow\" href=\"https://w3c.github.io/html/\">latest HTML editors\' draft</a> shows the current proposed resolution of errata <i>in situ</i>.</p><p>All interested parties are invited to provide implementation and bug reports and other comments through the Working Group\'s <a target=\"_blank\" rel=\"nofollow\" href=\"https://github.com/w3c/html\">Issue tracker</a>. These will generally be considered in the development of HTML 5.2.</p><p>The <a target=\"_blank\" rel=\"nofollow\" href=\"https://w3c.github.io/test-results/html51/implementation-report.html\">implementation report</a> produced for this version demonstrates that in almost every case changes are matched by interoperable implementation.</p><p>The Working Group aims to produce an HTML 5.2 Recommendation in late 2017 that would obsolete this Recommendation.</p><p>This document was published by the <a target=\"_blank\" rel=\"nofollow\" href=\"https://www.w3.org/WebPlatform/WG/\">Web Platform Working Group</a> as a Recommendation. Feedback and comments on this specification are welcome. Please use <a target=\"_blank\" rel=\"nofollow\" href=\"https://github.com/w3c/html/issues\">Github issues</a>. Historical discussions can be found in the <a target=\"_blank\" rel=\"nofollow\" href=\"https://lists.w3.org/Archives/Public/public-html/\">public-html@w3.org archives</a>.</p></div>\r\n\r\n<br><p></p>', 1506834000, 'Developer', '21727988_1426405214095947_5656239064154726379_n.jpg'),
 (2, 'Lets-Play', 'Let\'s Play', 'play, blog', 'Let\'s Play', '', '<p>\r\n\r\nA <b>Let\'s Play</b> (commonly referred to as an <b>LP</b>) is a style of video series documenting the playthrough of a <a target=\"_blank\" rel=\"nofollow\" href=\"https://en.wikipedia.org/wiki/Video_game\">video game</a>, usually including commentary by the <a target=\"_blank\" rel=\"nofollow\" href=\"https://en.wikipedia.org/wiki/Gamer\">gamer</a>.<a target=\"_blank\" rel=\"nofollow\" href=\"https://en.wikipedia.org/wiki/Let\'s_Play#cite_note-1\">[1]</a> A Let\'s Play differs from a <a target=\"_blank\" rel=\"nofollow\" href=\"https://en.wikipedia.org/wiki/Video_game_walkthrough\">video game walkthrough</a> or <a target=\"_blank\" rel=\"nofollow\" href=\"https://en.wikipedia.org/wiki/Strategy_guide\">strategy guide</a> by focusing on an individual\'s subjective experience with the game, often with humorous, irreverent, or critical commentary from the gamer, rather than being an objective source of information on how to progress through the game.<a target=\"_blank\" rel=\"nofollow\" href=\"https://en.wikipedia.org/wiki/Let\'s_Play#cite_note-2\">[2]</a> While Let\'s Plays and <a target=\"_blank\" rel=\"nofollow\" href=\"https://en.wikipedia.org/wiki/Live_media\">live streaming</a> of game playthroughs are related, Let\'s Plays tend to be curated experiences that include editing and scripted narration, while streaming is an unedited experience performed on the fly.<a target=\"_blank\" rel=\"nofollow\" href=\"https://en.wikipedia.org/wiki/Let\'s_Play#cite_note-3\">[3]</a>\r\n\r\n<br></p>', 1509080400, 'Eslam', '1-600x3001.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category`
+--
+
+CREATE TABLE `category` (
+  `id` int(11) NOT NULL,
+  `cat_title` varchar(120) NOT NULL,
+  `cat_desc` text NOT NULL,
+  `img` varchar(225) NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `arrange` int(11) NOT NULL,
+  `type` varchar(225) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id`, `cat_title`, `cat_desc`, `img`, `date`, `arrange`, `type`) VALUES
+(1, 'Barware', 'Barware', '', '2017-09-18 11:22:35', 1, 'men'),
+(2, 'Flowers', 'Flowers', '', '2017-09-18 11:22:35', 2, 'men'),
+(3, 'Gift Baskets', 'Gift Baskets', '', '2017-09-18 11:22:35', 3, 'men'),
+(4, 'Gourmet Foods ', 'Gourmet Foods ', '', '2017-09-18 11:22:35', 4, 'men'),
+(5, 'Host & Hostess Gifts', 'Host & Hostess Gifts', '', '2017-09-18 11:22:35', 5, 'men'),
+(6, 'Jewelry', 'Jewelry', '', '2017-09-18 11:23:40', 6, 'men'),
+(7, 'Kitchenware', 'Kitchenware', '', '2017-09-18 11:23:40', 7, 'men'),
+(8, 'Personalized Gifts', 'Personalized Gifts', '', '2017-09-18 11:23:40', 8, 'men'),
+(9, 'Barware', 'Barware', '', '2017-09-18 11:22:35', 1, 'women');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ci_sessions`
+--
+
+CREATE TABLE `ci_sessions` (
+  `id` varchar(40) NOT NULL,
+  `ip_address` varchar(45) NOT NULL,
+  `timestamp` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `data` blob NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ci_sessions`
+--
+
+INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
+('g3vj2jjik8g5b1lpanqvs607dlkcm0fm', '::1', 1509341173, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393334313137323b),
+('1v7seek0npev1ob6pn5uhb30c0bd7b56', '::1', 1509341175, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393334313137353b),
+('v0kk48gso5l1cjnl2br4sq84sr572o96', '::1', 1509341200, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393334313230303b),
+('joh0dtkf93t1la8mj8k5hq84caupt9bu', '::1', 1509341203, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393334313230333b),
+('gm5v5h7v80dpg2enmkcudao35oof9g6h', '::1', 1509341531, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393334313533313b),
+('53bb5lfnhdbbdks7b5175bh795247o6l', '::1', 1509342170, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393334313930363b),
+('v2q961nmvj618dmko5vevun2bsfa5ohf', '::1', 1509342456, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393334323232393b6974656d7c733a39323a223c64697620636c6173733d22616c65727420616c6572742d64616e67657222207374796c653d22636f6c6f723a236630302220726f6c653d22616c657274223e43617274204669656c642049732052657175697265643c2f6469763e223b5f5f63695f766172737c613a313a7b733a343a226974656d223b733a333a226f6c64223b7d),
+('c5glsvkpo188hrppbt4ji5l8libc074s', '::1', 1509343770, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393334333438313b),
+('3u1arrmj9u3t6mn8q7shvbhkilk2alb4', '::1', 1509343858, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393334333832313b),
+('7i3hra052okv3nbv39bckg568a0i601l', '::1', 1509344288, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393334343236353b),
+('as12hv4755e0i2p57ju39jkrl8gchc23', '::1', 1509347048, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393334363736313b),
+('mmid6bt3k7dt32uphqfda2n1sfr29lcm', '::1', 1509347387, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393334373038373b),
+('4kqmgol7q7lln2j79t65g61ini5t9655', '::1', 1509347704, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393334373430373b),
+('6vo2ekfnkn8k5qa69daouclmv1vau5e7', '::1', 1509347905, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393334373734303b),
+('rbd0oavthfb7evfgop5a4sbdnisurj63', '::1', 1509348412, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393334383133353b),
+('4fouif9cvuepo3vtgqqe4dccntqk0pqu', '::1', 1509348747, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393334383436393b),
+('5n112qgal0d5uh6kv1jdm1vvdqapbhc5', '::1', 1509349128, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393334383930323b),
+('j347ns5hnpangv3febpmcm1haqit4nlm', '::1', 1509349252, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393334393233383b),
+('smff3hevhpnv09fg9spmns3ipsffgf06', '::1', 1509349937, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393334393736313b),
+('h03dj6pnn1ofglh4b8pdhdi83ct8kl2n', '::1', 1509487731, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393438373435313b69735f61646d696e7c733a313a2231223b757365725f69647c733a313a2231223b),
+('ch030h86h51d46qls8u06mk44vppaul8', '::1', 1509488295, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393438383236363b69735f61646d696e7c733a313a2231223b),
+('cmvli0bhkk4d792r2qmkak9cki7fl0kh', '::1', 1509489142, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393438393134323b),
+('fqbvhjr24k47fj2fqeh6kg9j896che5s', '::1', 1509564677, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393536343433303b),
+('pt4gf20rjve4o664dbit9j3vhaf5d7cm', '::1', 1509564654, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393536343532343b69735f61646d696e7c733a313a2231223b),
+('itkcjdjl3lclfcpt46h0c8j09jcb0o7n', '::1', 1509565505, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393536353436303b69735f61646d696e7c733a313a2231223b),
+('canvn6o31qlqifsd4vjb1pleu0r1idck', '::1', 1509567429, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393536373431383b69735f61646d696e7c733a313a2231223b),
+('v7dk83ee5vibos67tae3oi7jt7hmh02g', '::1', 1509690986, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393639303733303b),
+('tmlt52v2eomsg9015isd010f44ncio4v', '::1', 1509705511, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393730353530393b),
+('qnfkc7lb1li9n26uc5duudqc6rca8m7l', '::1', 1509706472, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393730363436353b),
+('kq10idoukm1leab9pidffhblf1sttbuv', '::1', 1509707482, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393730373233383b),
+('pcb8353rhdp267dj21qrgs4235dc86os', '::1', 1509707797, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393730373630303b),
+('sbbdufl9ef98i8i3spn7vgaj8q1ucoqs', '::1', 1509707994, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393730373938393b),
+('r41fgvn5d3gbe5pcc56b3gaqq50f0hnk', '::1', 1509709547, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393730393238363b),
+('k2ss69cf4fuagle0853vp88n7m8tklav', '::1', 1509709961, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393730393831333b),
+('ae9kdbir41dsti57d7u7d9bqume6e9rj', '::1', 1509710539, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393731303339323b),
+('olpdhgjtc5aa949bjvb8cf54l9sjhdot', '::1', 1509711191, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393731303839313b),
+('26tftsb1813ub41fffoda7h038i85269', '::1', 1509711320, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393731313139333b),
+('k6lh9jcem7l0vqql0ri8onq30ujsmc2a', '::1', 1509711502, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393731313334303b),
+('k6qqegqd3jpqfrrd7hqqdt6fnc13kedo', '::1', 1509711523, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393731313530393b),
+('mffhu6rhfuqm995p7u6epg3dv7c153ml', '::1', 1509713858, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393731333631393b),
+('3jftc8824q7vdstt4q5hebdukn9h31ag', '::1', 1509714217, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393731333932353b),
+('36sav9ggrdqtf1nk6oemqctj52mrocvu', '::1', 1509714705, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393731343530313b),
+('f07ob19gm81f3v2m0knk1sp02a31fumf', '::1', 1509715552, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393731353331333b757365725f69647c733a313a2231223b),
+('ne4oh2dg8oai377mrhb938d6lr7b2itu', '::1', 1509844194, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393834333936323b),
+('enekone7j7fj8lgtcmotm2oajtq5q1om', '::1', 1509844538, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393834343236343b),
+('ncm7695kcf2sn2l4d6a38ljr9pukav02', '::1', 1509844914, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393834343635313b),
+('kv8ich8oddvnir4osdvon0srtll09051', '::1', 1509845094, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393834343938323b),
+('imc3bukenaisp15ukm1h4cmdtlpm0kor', '::1', 1509870673, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393837303637313b),
+('nop97fgljb3ua2r7ppoak24rsoauhmvr', '::1', 1509870715, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530393837303731353b),
+('f3bfb55d49ab21f86a48840de15486df329e86b2', '::1', 1510097163, 0x5f5f63695f6c6173745f726567656e65726174657c693a313531303039373136323b),
+('fb08cf1c707b762de17920d7472db0a867c9f869', '::1', 1510219894, 0x5f5f63695f6c6173745f726567656e65726174657c693a313531303231393839323b),
+('vg8kl97heaansrt2g8kgjibe61qdu8md', '::1', 1511214858, 0x5f5f63695f6c6173745f726567656e65726174657c693a313531313231343835363b);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `enquiries`
+--
+
+CREATE TABLE `enquiries` (
+  `id` int(11) NOT NULL,
+  `date_created` int(11) NOT NULL,
+  `sent_to` int(11) NOT NULL,
+  `sent_by` int(11) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `opened` int(1) NOT NULL,
+  `code` varchar(120) NOT NULL,
+  `urgent` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `enquiries`
+--
+
+INSERT INTO `enquiries` (`id`, `date_created`, `sent_to`, `sent_by`, `subject`, `message`, `opened`, `code`, `urgent`) VALUES
+(1, 1508488939, 0, 1, 'PHP DEVELOPER', 'Hello Dear,\r\nI Hope Your Fine', 1, 'GkRGkg', 0),
+(2, 1508488939, 0, 3, 'Android Developer', 'Hello From Another Side', 1, 'o6LHcN', 0),
+(3, 1507501248, 1, 0, 'Wordpress Developer', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod<br>      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,<br>      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo<br>      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse<br>      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non<br>      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<small></small><br></p>', 1, 'l6o0Uq', 0),
+(4, 1508528225, 0, 1, 'First Try', 'First Try', 0, 'nQf7Sf', 0),
+(5, 1508528265, 0, 1, 'Second Try', 'Second Try With Urgent', 1, 'OXiFp1', 1),
+(6, 1508553693, 0, 1, 'Working!', 'Yeah.. its working', 1, 'aNmUhH', 0),
+(8, 1508556680, 1, 0, 'Working!', 'Second Attempt<small></small><br><br>\r\n            -----------------------------------------------------<br>\r\n            Original Message Is Shown Below: \r\n            <br><br>\r\n            Yeah.. its working', 1, '8XFxGy', 0),
+(10, 1508612021, 0, 1, 'Working!', 'sdfsdfsdf\r\n            ---------------------------------\r\n            Second Attempt\r\n            \r\n            \r\n            -----------------------------------------------------\r\n            \r\n            Original Message Is Shown Below: \r\n            \r\n            \r\n            \r\n            Yeah.. its working', 1, 'CXVh4V', 0),
+(11, 1508612123, 1, 0, 'Working!', 'What?<br><br>\r\n            -----------------------------------------------------<br>\r\n            Original Message Is Shown Below: \r\n            <br><br>\r\n            sdfsdfsdf\r\n            ---------------------------------\r\n            Second Attempt\r\n            \r\n            \r\n            -----------------------------------------------------\r\n            \r\n            Original Message Is Shown Below: \r\n            \r\n            \r\n            \r\n            Yeah.. its working', 1, 'WrQBcR', 0),
+(12, 1508612154, 0, 1, 'Working!', 'sorry in mass wrong\r\n            ---------------------------------\r\n            What?\r\n            \r\n            \r\n            -----------------------------------------------------\r\n            \r\n            Original Message Is Shown Below: \r\n            \r\n            \r\n            \r\n            sdfsdfsdf\r\n            ---------------------------------\r\n            Second Attempt\r\n            \r\n            \r\n            -----------------------------------------------------\r\n            \r\n            Original Message Is Shown Below: \r\n            \r\n            \r\n            \r\n            Yeah.. its working', 1, 'n4E3Rn', 0),
+(13, 1508612214, 1, 0, 'Working!', 'Don\'t Worry :D<br><br>\r\n            -----------------------------------------------------<br>\r\n            Original Message Is Shown Below: \r\n            <br><br>\r\n            sorry in mass wrong\r\n            ---------------------------------\r\n            What?\r\n            \r\n            \r\n            -----------------------------------------------------\r\n            \r\n            Original Message Is Shown Below: \r\n            \r\n            \r\n            \r\n            sdfsdfsdf\r\n            ---------------------------------\r\n            Second Attempt\r\n            \r\n            \r\n            -----------------------------------------------------\r\n            \r\n            Original Message Is Shown Below: \r\n            \r\n            \r\n            \r\n            Yeah.. its working', 1, 'HhDBJJ', 0);
 
 -- --------------------------------------------------------
 
@@ -169,6 +326,19 @@ INSERT INTO `item_stores` (`id`, `title_item`, `url_item`, `price_item`, `descri
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `site_cookie`
+--
+
+CREATE TABLE `site_cookie` (
+  `id` int(11) NOT NULL,
+  `cookie_code` varchar(120) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `expiry_date` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `stores_category`
 --
 
@@ -186,11 +356,11 @@ CREATE TABLE `stores_category` (
 --
 
 INSERT INTO `stores_category` (`id`, `cat_name`, `cat_url`, `cat_parent_id`, `priority`, `posted_info`) VALUES
-(1, 'Clothes', 'Clothes', 0, 1, ''),
-(2, 'Babies World', 'Babies-World', 3, 1, ''),
-(3, 'Mobiles&Tablets', 'MobilesTablets', 0, 2, ''),
-(4, 'Samsung Note 8', 'Samsung-Note-8', 3, 2, ''),
-(5, 'Samsung ', 'Samsung', 0, 3, ''),
+(1, 'Clothes', 'Clothes', 0, 3, ''),
+(2, 'Babies World', 'Babies-World', 3, 2, ''),
+(3, 'Mobiles&Tablets', 'MobilesTablets', 0, 1, ''),
+(4, 'Samsung Note 8', 'Samsung-Note-8', 3, 1, ''),
+(5, 'Samsung ', 'Samsung', 0, 2, ''),
 (6, 'Samsung Note J7', 'Samsung-Note-J7', 3, 3, '');
 
 -- --------------------------------------------------------
@@ -214,18 +384,79 @@ CREATE TABLE `store_accounts` (
   `email` varchar(120) NOT NULL,
   `date_mode` int(11) NOT NULL,
   `pword` varchar(225) DEFAULT NULL,
-  `status` int(1) NOT NULL
+  `status` int(1) NOT NULL,
+  `last_login` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `store_accounts`
 --
 
-INSERT INTO `store_accounts` (`id`, `username`, `fistname`, `lastname`, `company`, `address`, `address2`, `town`, `country`, `post_code`, `telnum`, `email`, `date_mode`, `pword`, `status`) VALUES
-(1, 'eslam', 'eslam', 'elbadry', 'unitscope', 'egypt', 'madiaa', 'egypt', 'cairo', '12035', '01152945713', 'eslam@123.com', 1503117216, '$2y$12$sv77IbtF3fDZSrzNAnpQaOcCMzr4/xMRs4IwjzMncrqcLk7mJgf7W', 0),
-(2, 'eslam', 'ahmad', 'elbadry', 'abc', 'helwan', '15may', 'egypt', 'cairo', '12985', '015163106530', 'tttt@ttt.com', 1503117216, '$2y$12$5HcxzlmL.lY0a//lNpeT8OgFk2KZsergVF4AM6fhsGjEUjMlo1pty', 0),
-(3, 'admin', 'admin', 'admin', 'emicads', 'maadi', 'helwan', 'egypt', 'cairo', '12345', '01152945713', 'eslam@123.com', 1505557315, NULL, 0),
-(4, 'john', '', '', '', '', '', '', '', '', '', 'john.smith@yahoo.com', 0, '$2y$12$PNjSfxebqebgcEcsb681o.i/kWo5awSTPJH.sejyXEQ7jiyshe0p6', 0);
+INSERT INTO `store_accounts` (`id`, `username`, `fistname`, `lastname`, `company`, `address`, `address2`, `town`, `country`, `post_code`, `telnum`, `email`, `date_mode`, `pword`, `status`, `last_login`) VALUES
+(1, 'eslam', 'eslam', 'elbadry', 'unitscope', 'egypt', 'madiaa', 'egypt', 'cairo', '12035', '01152945713', 'eslam@123.com', 1503117216, '$2y$12$T0JlsFRMxnBuKY/Qy6TN2e2u1UyiBlC4z6djmmfl9be76z1mqv4JG', 0, 1509715552),
+(3, 'admin', 'admin', 'admin', 'emicads', 'maadi', 'helwan', 'egypt', 'cairo', '12345', '01152945713', 'eslam@123.com', 1505557315, NULL, 0, 0),
+(4, 'john', 'marwa', 'ahmed', '', '', '', '', '', '', '', 'john.smith@yahoo.com', 0, '$2y$12$PNjSfxebqebgcEcsb681o.i/kWo5awSTPJH.sejyXEQ7jiyshe0p6', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `store_basket`
+--
+
+CREATE TABLE `store_basket` (
+  `id` int(11) NOT NULL,
+  `session_id` varchar(32) NOT NULL,
+  `item_title` varchar(250) NOT NULL,
+  `price` decimal(7,0) NOT NULL,
+  `tax` decimal(7,0) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `item_qty` int(11) NOT NULL,
+  `item_color` varchar(70) NOT NULL,
+  `item_size` varchar(70) NOT NULL,
+  `date_added` int(11) NOT NULL,
+  `shopper_id` int(11) NOT NULL,
+  `ip_address` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `store_basket`
+--
+
+INSERT INTO `store_basket` (`id`, `session_id`, `item_title`, `price`, `tax`, `item_id`, `item_qty`, `item_color`, `item_size`, `date_added`, `shopper_id`, `ip_address`) VALUES
+(1, 'r8i44hfq3mbqbbis04o6nfbqg8e9ta7n', '', '8630', '0', 10, 10, '', '10', 1509009429, 1, 0),
+(2, 'r8i44hfq3mbqbbis04o6nfbqg8e9ta7n', '', '8630', '0', 10, 10, '', '10', 1509009463, 1, 0),
+(3, '2tlsp3qanccc3d53b6c32msc3g2tpvth', 'Fender FSR USA Pro Stratocaster HSS in Black', '12945', '0', 10, 15, '', '30', 1509009515, 1, 0),
+(4, '2tlsp3qanccc3d53b6c32msc3g2tpvth', 'Fender FSR USA Pro Stratocaster HSS in Black', '10356', '0', 10, 12, 'GREEN', '20', 1509009807, 1, 0),
+(5, '820o3rrrpe04bf5pk4q4o93ft20auar4', 'Fender Coronado Guitar in 3 Colour Sunburst', '4990', '0', 13, 10, 'Blue', 'Medium', 1509143379, 0, 0),
+(6, '53bb5lfnhdbbdks7b5175bh795247o6l', 'Fender American Deluxe Strat Plus HSS in Metallic 3 Tone Sunburst', '1419', '0', 5, 5, '', '', 1509342167, 0, 0),
+(7, 'c5glsvkpo188hrppbt4ji5l8libc074s', 'Fender American Deluxe Strat Plus HSS in Metallic 3 Tone Sunburst', '1419', '0', 5, 2, '', '', 1509343481, 0, 0),
+(8, '3u1arrmj9u3t6mn8q7shvbhkilk2alb4', 'Fender American Deluxe Strat Plus HSS in Metallic 3 Tone Sunburst', '1419', '0', 5, 32, '', '', 1509343832, 0, 0),
+(9, '7i3hra052okv3nbv39bckg568a0i601l', 'Fender American Deluxe Strat Plus HSS in Metallic 3 Tone Sunburst', '1419', '0', 5, 34, '', '', 1509344271, 0, 0),
+(10, 'as12hv4755e0i2p57ju39jkrl8gchc23', 'Fender American Deluxe Strat Plus HSS in Metallic 3 Tone Sunburst', '1419', '0', 5, 43, '', '', 1509346764, 0, 0),
+(11, 'mmid6bt3k7dt32uphqfda2n1sfr29lcm', 'Fender American Deluxe Strat Plus HSS in Metallic 3 Tone Sunburst', '1419', '0', 5, 4, '', '', 1509347091, 0, 0),
+(12, '4kqmgol7q7lln2j79t65g61ini5t9655', 'Fender American Deluxe Strat Plus HSS in Metallic 3 Tone Sunburst', '1419', '0', 5, 43, '', '', 1509347515, 0, 0),
+(13, '6vo2ekfnkn8k5qa69daouclmv1vau5e7', 'Fender American Deluxe Strat Plus HSS in Metallic 3 Tone Sunburst', '1419', '0', 5, 3, '', '', 1509347839, 0, 0),
+(14, 'rbd0oavthfb7evfgop5a4sbdnisurj63', 'Fender Jimi Hendrix Strat in Black', '649', '0', 6, 43, '', '', 1509348141, 0, 0),
+(15, '4fouif9cvuepo3vtgqqe4dccntqk0pqu', 'Fender Jimi Hendrix Strat in Black', '649', '0', 6, 23, '', '', 1509348553, 0, 0),
+(16, '5n112qgal0d5uh6kv1jdm1vvdqapbhc5', 'Fender Jimi Hendrix Strat in Black', '649', '0', 6, 23, '', '', 1509348954, 0, 0),
+(17, '5n112qgal0d5uh6kv1jdm1vvdqapbhc5', 'Fender American Deluxe Strat Plus HSS in Metallic 3 Tone Sunburst', '1419', '0', 5, 43, '', '', 1509349127, 0, 0),
+(18, 'j347ns5hnpangv3febpmcm1haqit4nlm', 'Fender Jimi Hendrix Strat in Black', '649', '0', 6, 1, '', '', 1509349244, 0, 0),
+(19, 'j347ns5hnpangv3febpmcm1haqit4nlm', 'Fender American Deluxe Dimension Bass IV HH RW in Violin Burst', '1529', '0', 4, 1, 'yellow', '', 1509349252, 0, 0),
+(20, 'smff3hevhpnv09fg9spmns3ipsffgf06', 'Fender American Deluxe Strat Plus HSS in Metallic 3 Tone Sunburst', '1419', '0', 5, 4, '', '', 1509349768, 0, 0),
+(21, 'v7dk83ee5vibos67tae3oi7jt7hmh02g', 'Fender Japan FSR Classic 69 Telecaster Pink Paisley', '901', '0', 8, 2, '', '', 1509690769, 0, 0),
+(22, 'v7dk83ee5vibos67tae3oi7jt7hmh02g', 'Fender American Deluxe Dimension Bass IV HH RW in Violin Burst', '1529', '0', 4, 4, 'yellow', '', 1509690986, 0, 0),
+(23, 'qnfkc7lb1li9n26uc5duudqc6rca8m7l', 'Fender American Deluxe Dimension Bass IV HH RW in Violin Burst', '1529', '0', 4, 2, 'yellow', '', 1509706471, 0, 0),
+(24, 'kq10idoukm1leab9pidffhblf1sttbuv', 'Fender American Deluxe Dimension Bass IV HH RW in Violin Burst', '1529', '0', 4, 1, 'yellow', '', 1509707246, 0, 0),
+(25, 'olpdhgjtc5aa949bjvb8cf54l9sjhdot', 'Fender American Deluxe Dimension Bass IV HH RW in Violin Burst', '1529', '0', 4, 1, 'yellow', '', 1509710903, 0, 0),
+(26, '26tftsb1813ub41fffoda7h038i85269', 'Fender Jimi Hendrix Strat in Black', '649', '0', 6, 2, '', '', 1509711201, 0, 0),
+(28, 'k6lh9jcem7l0vqql0ri8onq30ujsmc2a', 'Fender American Deluxe Strat Plus HSS in Metallic 3 Tone Sunburst', '1419', '0', 5, 3, '', '', 1509711344, 0, 0),
+(29, 'k6lh9jcem7l0vqql0ri8onq30ujsmc2a', 'Fender CD-60 Acoustic Guitar Starter Pack in Natural', '139', '0', 7, 5, '', '', 1509711476, 0, 0),
+(30, 'k6lh9jcem7l0vqql0ri8onq30ujsmc2a', 'Fender Jimi Hendrix Strat in Black', '649', '0', 6, 2, '', '', 1509711498, 0, 0),
+(31, 'k6qqegqd3jpqfrrd7hqqdt6fnc13kedo', 'Fender CD-60 Acoustic Guitar Starter Pack in Natural', '139', '0', 7, 6, '', '', 1509711520, 0, 0),
+(32, '3jftc8824q7vdstt4q5hebdukn9h31ag', 'Fender American Deluxe Strat Plus HSS in Metallic 3 Tone Sunburst', '1419', '0', 5, 32, '', '', 1509713986, 0, 0),
+(33, '3jftc8824q7vdstt4q5hebdukn9h31ag', 'Fender FSR USA Pro Stratocaster HSS in Black', '863', '0', 10, 2, 'BLUE', '20', 1509714201, 0, 0),
+(34, '36sav9ggrdqtf1nk6oemqctj52mrocvu', 'Fender CD-60 Acoustic Guitar Starter Pack in Natural', '139', '0', 7, 3, '', '', 1509714508, 0, 0),
+(35, 'f07ob19gm81f3v2m0knk1sp02a31fumf', 'Fender American Deluxe Strat Plus HSS in Metallic 3 Tone Sunburst', '1419', '0', 5, 4, '', '', 1509715316, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -318,7 +549,11 @@ INSERT INTO `store_item_colors` (`id`, `item_id`, `color`) VALUES
 (18, 13, 'Red'),
 (19, 13, 'Blue'),
 (20, 14, 'red'),
-(21, 14, 'green');
+(21, 14, 'green'),
+(22, 10, 'RED'),
+(23, 10, 'GREEN'),
+(24, 10, 'YELLOE'),
+(25, 10, 'BLUE');
 
 -- --------------------------------------------------------
 
@@ -339,7 +574,12 @@ CREATE TABLE `store_item_sizes` (
 INSERT INTO `store_item_sizes` (`id`, `item_id`, `size`) VALUES
 (5, 13, 'Large'),
 (6, 13, 'Medium'),
-(7, 13, 'Samll');
+(7, 13, 'Samll'),
+(8, 12, '20'),
+(9, 12, '30'),
+(10, 10, '10'),
+(11, 10, '20'),
+(12, 10, '30');
 
 -- --------------------------------------------------------
 
@@ -370,9 +610,33 @@ INSERT INTO `webpages` (`id`, `page_url`, `page_title`, `page_keywords`, `page_d
 --
 
 --
+-- Indexes for table `admins`
+--
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `blogs`
 --
 ALTER TABLE `blogs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ci_sessions`
+--
+ALTER TABLE `ci_sessions`
+  ADD KEY `ci_sessions_timestamp` (`timestamp`);
+
+--
+-- Indexes for table `enquiries`
+--
+ALTER TABLE `enquiries`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -394,6 +658,12 @@ ALTER TABLE `item_stores`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `site_cookie`
+--
+ALTER TABLE `site_cookie`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `stores_category`
 --
 ALTER TABLE `stores_category`
@@ -403,6 +673,12 @@ ALTER TABLE `stores_category`
 -- Indexes for table `store_accounts`
 --
 ALTER TABLE `store_accounts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `store_basket`
+--
+ALTER TABLE `store_basket`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -434,10 +710,25 @@ ALTER TABLE `webpages`
 --
 
 --
+-- AUTO_INCREMENT for table `admins`
+--
+ALTER TABLE `admins`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `blogs`
 --
 ALTER TABLE `blogs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `category`
+--
+ALTER TABLE `category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `enquiries`
+--
+ALTER TABLE `enquiries`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `homepage_blocks`
 --
@@ -454,6 +745,11 @@ ALTER TABLE `homepage_offers`
 ALTER TABLE `item_stores`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 --
+-- AUTO_INCREMENT for table `site_cookie`
+--
+ALTER TABLE `site_cookie`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `stores_category`
 --
 ALTER TABLE `stores_category`
@@ -464,6 +760,11 @@ ALTER TABLE `stores_category`
 ALTER TABLE `store_accounts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
+-- AUTO_INCREMENT for table `store_basket`
+--
+ALTER TABLE `store_basket`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+--
 -- AUTO_INCREMENT for table `store_cat_assign`
 --
 ALTER TABLE `store_cat_assign`
@@ -472,12 +773,12 @@ ALTER TABLE `store_cat_assign`
 -- AUTO_INCREMENT for table `store_item_colors`
 --
 ALTER TABLE `store_item_colors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `store_item_sizes`
 --
 ALTER TABLE `store_item_sizes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `webpages`
 --

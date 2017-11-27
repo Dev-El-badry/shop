@@ -34,7 +34,7 @@ class Item_stores extends MX_Controller
         $bread_crumbs_data['breadcrums_arr'] = $this->_generate_breadcrums_array($update_id);
         $data['breadcrumbs_data'] = $bread_crumbs_data;
 
-
+        $data['use_featherlight'] = TRUE;
         $data['update_id'] = $update_id;
 		$data['flash'] = $this->session->flashdata('item');
 		$data['module'] = 'item_stores';
@@ -67,7 +67,13 @@ class Item_stores extends MX_Controller
         $this->load->module('site_settings');
         $this->load->module('store_category');
 
-	    $url_referer = $_SERVER['HTTP_REFERER'];
+        if(isset($_SERVER['HTTP_REFERER'])) {
+        	$url_referer = $_SERVER['HTTP_REFERER'];
+        } else {
+        	$url_referer = '';
+        }
+
+	    
 	    $ditch_this = base_url().$this->site_settings->_get_items_segments();
 	    $cat_url = str_replace($ditch_this, '', $url_referer);
         $sub_cat_id = $this->store_category->_get_id_by_catUrl($cat_url);

@@ -7,27 +7,74 @@ class Store_accounts extends MX_Controller
 	    $this->form_validation->CI =& $this;
 	}
 
-	function autoge() {
-		$query_sql = "show COLUMNS from store_accounts";
-		$query = $this->_custom_query($query_sql);
-		foreach ($query->result() as $row) {
-			$column = $row->Field;
-			if($column != 'id') {
-				echo '$this->form_validation->set_rules(\''.$column.'\', \''.$column.'\' ,\'required|numeric)\'';
-				echo '<br>';
-				
-			}
-		}
-echo '<hr />';
-		foreach ($query->result() as $row) {
-			$column = $row->Field;
-			
-				
-				echo '$data[\''.$column.'\'] = $row->'.$column.'; '. '<br>';
-			
-		}
-	}
+	function _generate_token($update_id) {
+        $data = $this->get_data_from_db($update_id);
+        $date_made = $data['date_mode'];
+        $last_login = $data['last_login'];
+        $pword = $data['pword'];
+        
+        $hashed_code = $pword;
+        $start = strlen($hashed_code) - 6;
+        $last_six_chars = substr($hashed_code, $start, 6);
+        
+        if(strlen($pword)>5 && $last_login!=='') {
+        	$token = $last_six_chars.$date_made.$last_login;
+        } else {
+        	$token = '';
+        }
 
+        return $token;
+    }
+
+    function _get_customer_id_from_token($token) {
+		$six_chars = substr($token, 0, 6);
+    	$date_made = substr($token, 6, 10);
+    	$last_login = substr($token, 16, 10);
+
+    	$sql_query = "select * from store_accounts where date_mode = ? and pword like ? and last_login = ? ";
+    	$query = $this->db->query($sql_query, array($date_made, '%'.$six_chars, $last_login));
+    	
+    	foreach ($query->result as $row) {
+    		$customer_id = $row->id;
+    	}
+
+    	if(!isset($customer_id)) {
+    		$customer_id = 0;
+    	}
+
+    	return $customer_id;
+    }
+
+
+	function _get_customer_name($update_id, $optoinal_customer_data = NULL) {
+		if(!isset($optoinal_customer_data)) {
+			$data = $this->get_data_from_db($update_id);
+		} else {
+			$data['company'] = trim(ucfirst($optoinal_customer_data['company']));
+			$data['fistname'] = trim(ucfirst($optoinal_customer_data['firstname']));
+			$data['lastname'] = trim(ucfirst($optoinal_customer_data['lastname']));
+		}
+
+		//var_dump($data); die;
+		
+		if($data=='') {
+			$customer_name = "Unknown";
+		} else {
+			$company = $data['company'];
+			$fistname = $data['fistname'];
+			$lastname = $data['lastname'];
+
+			$customer_name = $fistname . " " .$lastname;
+		
+			$company_length = strlen($company);
+			if($company_length > 2) {
+				$customer_name .= " from ".$company;
+			}
+
+		}
+	
+		return $customer_name;
+	}
 
 	function update_password() {
 		$this->load->module('site_secuirty');
@@ -412,6 +459,7 @@ echo '<hr />';
 			$data['email'] = $row->email; 
 			$data['date_mode'] = $row->date_mode; 
 			$data['pword'] = $row->pword; 
+			$data['last_login'] = $row->last_login;
 		}
 
 		return $data;
@@ -455,6 +503,12 @@ echo '<hr />';
 	$query = $this->Mdl_store_accounts->get_where_custom($col, $value);
 	return $query;
 	}
+
+    function get_double_where_custom($col1, $value1,$col2, $value2) {
+        $this->load->model('Mdl_store_accounts');
+        $query = $this->Mdl_store_accounts->get_double_where_custom($col1, $value1,$col2, $value2);
+        return $query;
+    }
 
 	function _insert($data) {
 	$this->load->model('Mdl_store_accounts');

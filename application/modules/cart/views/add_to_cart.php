@@ -1,5 +1,9 @@
+<?php
+	$form_location = base_url() . 'store_basket/add_to_basket';
+?>
 <div class="add-to-cart" style="background-color: #ddd;padding: 5px ; border-radius: 5px">
-	<form action="" method="post">
+	
+	<form action="<?= $form_location ?>" method="post">
 		<div class="form-group" style="margin-left: 16px">
 			<label class="colspan-2">ID Item: <?= $id ?></label>
 		</div>
@@ -36,11 +40,14 @@
 		<!-- Start Section Quantity -->
 		<div class="form-group">
 			<div class="col-sm-3"><label>Qty:</label></div>
-			<div class="col-sm-6"><input type="" class="form-control" name=""></div>			
+			<div class="col-sm-6"><input type="text" class="form-control" name="item_qty"></div>			
 		</div>
+		<?php 
+		echo form_hidden('item_id', $id);
+		?>
 		<!-- End Section Quantity -->
 		<div class="form-group colspan-2 text-center" >
-		    <input type="submit"  style="margin-top: 8px" name="add_to_basket" class="btn btn-primary" value="ADD TO BASKET" />
+		    <button type="submit" name="submit" value="Submit" style="margin-top: 8px" class="btn btn-primary">ADD TO CART</button>
 		</div>
 	</form>
 </div>
