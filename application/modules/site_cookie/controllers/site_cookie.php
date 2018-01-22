@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Site_cookie extends MX_Controller
+class Site_cookie extends MY_Backend
 {
 
 	function __construct() {

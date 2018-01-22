@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Products extends MX_Controller
+class Products extends MY_Backend
 {
 
 	function __construct() {

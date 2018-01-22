@@ -1,10 +1,38 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Store_accounts extends MX_Controller
+class Store_accounts extends MY_Backend
 {
 	function __construct() {
 	parent::__construct();
 		$this->load->library('form_validation');
 	    $this->form_validation->CI =& $this;
+	    $this->lang->load('admin/users');
+	}
+
+	function _get_shopper_address($update_id, $delimiter) {
+		$data = $this->get_data_from_db($update_id);
+		$address = '';
+
+		if(!empty($data['address'])) {
+			$address .= $data['address'];
+			$address .= $delimiter;
+		}  
+
+		if(!empty($data['address2'])) {
+			$address .= $data['address2'];
+			$address .= $delimiter;
+		} 
+
+		if(!empty($data['town'])) {
+			$address .= $data['town'];
+			$address .= $delimiter;
+		} 
+
+		if(!empty($data['country'])) {
+			$address .= $data['country'];
+			$address .= $delimiter;
+		} 
+
+		return $address;
 	}
 
 	function _generate_token($update_id) {
@@ -58,7 +86,7 @@ class Store_accounts extends MX_Controller
 		//var_dump($data); die;
 		
 		if($data=='') {
-			$customer_name = "Unknown";
+			$customer_name = $this->lang->line('unknown');
 		} else {
 			$company = $data['company'];
 			$fistname = $data['fistname'];
@@ -88,8 +116,8 @@ class Store_accounts extends MX_Controller
 		if ($submit == "Submit") {
 
 		//Process The Form
-		$this->form_validation->set_rules('pword', 'password' ,'required|trim|min_length[7]');
-		$this->form_validation->set_rules('re_pword', 'Confirm Password' ,'required|matches[pword]');
+		$this->form_validation->set_rules('pword', $this->lang->line('password') ,'required|trim|min_length[7]');
+		$this->form_validation->set_rules('re_pword', $this->lang->line('confirm_password') ,'required|matches[pword]');
 
 			if ($this->form_validation->run() == TRUE) {
 
@@ -102,7 +130,7 @@ class Store_accounts extends MX_Controller
 					
 					//update data
 					$this->_update($update_id, $data_pword);
-					$value = '<div class="alert alert-success" role="alert">Successfully Update Password</div>';
+					$value = '<div class="alert alert-success" role="alert">'.$this->lang->line('update_password_alert').'</div>';
 					$this->session->set_flashdata('item', $value);
 					redirect(base_url().'store_accounts/manage');
 				} 
@@ -114,7 +142,7 @@ class Store_accounts extends MX_Controller
 			redirect(base_url().'store_accounts/manage');
 		}
 
-		$data['head_line'] = 'Update Password';
+		$data['head_line'] =$this->lang->line('update_password');
 		
 		
 		$data['flash'] = $this->session->flashdata('item');
@@ -158,30 +186,30 @@ class Store_accounts extends MX_Controller
 	}
 
 	public function _delete_process($id_item) {
-		// delete colors of item
-		$this->load->module('store_item_colors');
-		$this->store_item_colors->_delete_conif($id_item);
-		// delete sizes of item
-		$this->load->module('store_item_sizes');
-		$this->store_item_sizes->_delete_conif($id_item);
-		// delete images of item
-		$data = $this->get_data_from_db($id_item);
-		$big_pic = $data['big_img'];
-		$small_pic = $data['small_img'];
-
-		$big_path = './big_img/'.$big_pic;
-		$small_path = './small_pics/'.$small_pic;
-
-		if (file_exists($big_path)) {
-			unlink($big_path);
-		}
-
-		if (file_exists($small_path)) {
-			unlink($small_path);
-		}
 
 		// delete item record from items_stores
 		$this->_delete($id_item);
+	}
+
+	function _make_sure_allowed_deleted($update_id) {
+
+		//return TRUE OR FALSE
+
+		$sql_query = "select * from store_basket where shopper_id = $update_id";
+		$query = $this->_custom_query($sql_query);
+		$num_rows = $query->num_rows();
+		if($num_rows>0) {
+			return FALSE; //Note Allwoed To Delete This Account
+		}
+
+		$sql_query = "select * from store_shoppertrack where shopper_id = $update_id";
+		$query = $this->_custom_query($sql_query);
+		$num_rows = $query->num_rows();
+		if($num_rows>0) {
+			return FALSE; // Note Allowed To Delete This Account
+		}
+
+		return TRUE; // Everythings is okay, so That Can Delete It
 	}
 
 	public function delete($update_id) {
@@ -197,12 +225,21 @@ class Store_accounts extends MX_Controller
 		if($submit == "Cancel") {
 
 			redirect(base_url().'store_accounts/manage');
-		} elseif ($submit == "Yes - Delete Item Record") {
+		} elseif ($submit == $this->lang->line('del_shipper')) {
 			$item_id = $this->input->post('update_id');
+			$allowed = $this->_make_sure_allowed_deleted($update_id);
+			if($allowed == FALSE) {
+				// Note Allowed To Delete Account
+				$value = '<div class="alert alert-warning" role="alert">'.$this->lang->line('alert_allowed_account').'</div>';
+				$this->session->set_flashdata('item', $value);
+				redirect('store_accounts/manage');
+			} 
+			// Note Allowed To Delete Account Is Not Has Item In Orders Or Basket
+			
 			// Delete Item
 			$this->_delete_process($update_id);
 
-			$value = '<div class="alert alert-success" role="alert">Successfully Delete Item Record</div>';
+			$value = '<div class="alert alert-danger" role="alert">'.$this->lang->line('alert_del_shipper').'</div>';
 			$this->session->set_flashdata('item', $value);
 			
 
@@ -222,7 +259,7 @@ class Store_accounts extends MX_Controller
 		}
 	
 		$data['update_id'] = $update_id;
-		$data['head_line'] = 'Delete Item';
+		$data['head_line'] = $this->lang->line('del_account');
 		$data['flash'] = $this->session->flashdata('item');
 		$data['module'] = 'store_accounts';
 		$data['view_file'] = 'deleteconif';
@@ -356,17 +393,17 @@ class Store_accounts extends MX_Controller
 		if ($submit == "Submit") {
 
 			//Process The Form
-			$this->form_validation->set_rules('username', 'Username' ,'required|max_length[60]');
-			$this->form_validation->set_rules('fistname', 'fist name' ,'required|max_length[240]');
-			$this->form_validation->set_rules('lastname', 'last name' ,'required');
-			$this->form_validation->set_rules('company', 'company' ,'required');
-			$this->form_validation->set_rules('address', 'address' ,'required');
-			$this->form_validation->set_rules('address2', 'address2' ,'required');
-			$this->form_validation->set_rules('town', 'town' ,'required');
-			$this->form_validation->set_rules('country', 'country' ,'required');
-			$this->form_validation->set_rules('post_code', 'post code' ,'required|numeric');
-			$this->form_validation->set_rules('telnum', 'telnum' ,'required');
-			$this->form_validation->set_rules('email', 'email' ,'trim|required|valid_email');
+			$this->form_validation->set_rules('username', $this->lang->line('username') ,'required|max_length[60]');
+			$this->form_validation->set_rules('fistname', $this->lang->line('first_name') ,'required|max_length[240]');
+			$this->form_validation->set_rules('lastname', $this->lang->line('last_name') ,'required');
+			$this->form_validation->set_rules('company', $this->lang->line('company') ,'required');
+			$this->form_validation->set_rules('address', $this->lang->line('address1') ,'required');
+			$this->form_validation->set_rules('address2', $this->lang->line('address2') ,'required');
+			$this->form_validation->set_rules('town', $this->lang->line('town') ,'required');
+			$this->form_validation->set_rules('country', $this->lang->line('country') ,'required');
+			$this->form_validation->set_rules('post_code', $this->lang->line('post_code') ,'required|numeric');
+			$this->form_validation->set_rules('telnum', $this->lang->line('telephone_number') ,'required');
+			$this->form_validation->set_rules('email', $this->lang->line('email') ,'trim|required|valid_email');
 			
 			
 
@@ -378,7 +415,7 @@ class Store_accounts extends MX_Controller
 					
 					//update data
 					$this->_update($update_id, $data);
-					$value = '<div class="alert alert-success" role="alert">Successfully Update Data Is Done</div>';
+					$value = '<div class="alert alert-success" role="alert">'.$this->lang->line('alert_update').'</div>';
 					$this->session->set_flashdata('item', $value);
 					redirect(base_url().'store_accounts/create/'.$update_id);
 				} else {
@@ -388,7 +425,7 @@ class Store_accounts extends MX_Controller
 					$res = $this->_insert($data);
 					
 					$update_id = $this->get_max();
-					$value = '<div class="alert alert-success">Successfully Insert Data Is Done</div>';
+					$value = '<div class="alert alert-success">'.$this->lang->line('alert_insert').'</div>';
 					$this->session->set_flashdata('item', $value);
 					redirect(base_url().'store_accounts/create/'.$update_id);
 				}
@@ -410,9 +447,9 @@ class Store_accounts extends MX_Controller
 		}
 
 		if(! is_numeric($update_id)) {
-			$data['head_line'] = 'Add New Account';
+			$data['head_line'] = $this->lang->line('update_shipper');
 		} else {
-			$data['head_line'] = 'Update Account';
+			$data['head_line'] = $this->lang->line('add_new_shipper');
 		}
 		
 		$data['flash'] = $this->session->flashdata('item');

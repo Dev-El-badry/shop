@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Yourmessages extends MX_Controller
+class Yourmessages extends MY_Backend
 {
 
 	function __construct() {

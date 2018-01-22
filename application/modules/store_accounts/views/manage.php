@@ -1,16 +1,16 @@
-<h1>Manage Accounts</h1>
+<h1>Manage Users</h1>
  <?php
         if (isset($flash)) {
           echo $flash;
         }
       ?>
- <a href="<?php echo base_url(); ?>store_accounts/create" class="btn btn-primary"><i class="fa fa-plus"></i>   Add New Account</a>
+ <a href="<?php echo base_url(); ?>store_accounts/create" class="btn btn-primary"><i class="fa fa-plus"></i>   <?= $this->lang->line('add_new_shipper') ?></a>
 <br> <br>
  <div class="row">
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title" style="color: #f00">Accounts Inventory</h3>
+              <h3 class="box-title" style="color: #f00"><?= $this->lang->line('shipper_accounts') ?></h3>
 
               <div class="box-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -22,13 +22,13 @@
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
                 <tr>
-                  <th>ID</th>
-                  <th>Username</th>
-                  <th>Fisrt Name</th>
-                  <th>Last Name</th>
-                  <th>Company</th>
-                  <th>Date Created</th>
-                  <th>Actions</th>
+                  <th><?= $this->lang->line('id') ?></th>
+                  <th><?= $this->lang->line('username') ?></th>
+                  <th><?= $this->lang->line('first_name') ?></th>
+                  <th><?= $this->lang->line('last_name') ?></th>
+                  <th><?= $this->lang->line('comapny') ?></th>
+                  <th><?= $this->lang->line('date_created') ?></th>
+                  <th><?= $this->lang->line('actions') ?></th>
                  
                 </tr>
                <?php

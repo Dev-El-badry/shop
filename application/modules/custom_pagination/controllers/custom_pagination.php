@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Custom_pagination extends MX_Controller
+class Custom_pagination extends MY_Backend
 {
 
 	function __construct() {

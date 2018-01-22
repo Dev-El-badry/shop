@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Enquiries extends MX_Controller
+class Enquiries extends MY_Backend
 {
 
 	function __construct() {
@@ -246,7 +246,7 @@ class Enquiries extends MX_Controller
     }
 
     function manage() {
-        $this->output->enable_profiler(true);
+       // $this->output->enable_profiler(true);
         $this->load->module('site_secuirty');
         $this->load->module('timedate');
         $this->site_secuirty->_make_sure_is_admin();     

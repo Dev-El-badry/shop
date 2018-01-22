@@ -1,10 +1,17 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Item_stores extends MX_Controller
+class Item_stores extends MY_Backend
 {
 	function __construct() {
 	parent::__construct();
 		$this->load->library('form_validation');
 	    $this->form_validation->CI =& $this;
+	    $this->lang->load('admin/store_items');
+	}
+
+	function _get_title($parent_id){
+		$data = $this->get_data_from_db($parent_id);
+		$title = $data['title_item'];
+		return $title;
 	}
 
 	function _get_id_by_itemUrl($item_url) {
@@ -139,6 +146,16 @@ class Item_stores extends MX_Controller
 	}
 
 	public function _delete_process($id_item) {
+		//delete item galleries
+		$this->load->module('item_galleries');
+		$query = $this->item_galleries->get_where_custom('parent_id', $id_item);
+		$num_rows = $query->num_rows();
+		if($num_rows>0) {
+			foreach ($query->result() as $row) {
+				$id_item_gallery = $row->id;
+				$this->item_galleries->_delete_process($id_item_gallery);
+			}
+		}
 		// delete colors of item
 		$this->load->module('store_item_colors');
 		$this->store_item_colors->_delete_conif($id_item);
@@ -183,7 +200,7 @@ class Item_stores extends MX_Controller
 			// Delete Item
 			$this->_delete_process($update_id);
 
-			$value = '<div class="alert alert-success" role="alert">Successfully Delete Item Record</div>';
+			$value = '<div class="alert alert-danger" role="alert">'.$this->lang->line('alert_del').'</div>';
 			$this->session->set_flashdata('item', $value);
 			
 
@@ -203,7 +220,7 @@ class Item_stores extends MX_Controller
 		}
 	
 		$data['update_id'] = $update_id;
-		$data['head_line'] = 'Delete Item';
+		$data['head_line'] = $this->lang->line('delete_item');
 		$data['flash'] = $this->session->flashdata('item');
 		$data['module'] = 'item_stores';
 		$data['view_file'] = 'deleteconif';
@@ -242,7 +259,7 @@ class Item_stores extends MX_Controller
 		$data['small_img'] = "";		
 		$this->_update($update_id, $data);
 
-		$value = '<div class="alert alert-success" role="alert">Successfully Delete Item Image</div>';
+		$value = '<div class="alert alert-success" role="alert">'.$this->lang->line('alert_del_img').'</div>';
 		$this->session->set_flashdata('item', $value);
 
 		redirect('item_stores/create/'.$update_id);
@@ -339,11 +356,11 @@ class Item_stores extends MX_Controller
 
 			//Process The Form
 			$this->load->library('form_validation');
-			$this->form_validation->set_rules('title_item', 'Title Item', 'required|max_length[240]|callback_item_check');
-			$this->form_validation->set_rules('price_item', 'Price Item', 'required|numeric');
-			$this->form_validation->set_rules('was_price', 'Was Price', 'required');
-			$this->form_validation->set_rules('status', 'Status', 'required|numeric');
-			$this->form_validation->set_rules('describtion_item', 'Describtion Item', 'required');
+			$this->form_validation->set_rules('title_item', $this->lang->line('title_item'), 'required|max_length[240]|callback_item_check');
+			$this->form_validation->set_rules('price_item', $this->lang->line('item_price'), 'required|numeric');
+			$this->form_validation->set_rules('was_price', $this->lang->line('was_price'), 'required');
+			$this->form_validation->set_rules('status', $this->lang->line('status'), 'required|numeric');
+			$this->form_validation->set_rules('describtion_item', $this->lang->line('item_description'), 'required');
 
 			if ($this->form_validation->run() == TRUE) {
 				$data = $this->get_post_data();
@@ -353,7 +370,7 @@ class Item_stores extends MX_Controller
 					
 					//update data
 					$this->_update($update_id, $data);
-					$value = '<div class="alert alert-success" role="alert">Successfully Update Data Is Done</div>';
+					$value = '<div class="alert alert-success" role="alert">'.$this->lang->line('alert_update').'</div>';
 					$this->session->set_flashdata('item', $value);
 					redirect(base_url().'item_stores/create/'.$update_id);
 				} else {
@@ -363,7 +380,7 @@ class Item_stores extends MX_Controller
 					$res = $this->_insert($data);
 					
 					$update_id = $this->get_max();
-					$value = '<div class="alert alert-primary">Successfully Insert Data Is Done</div>';
+					$value = '<div class="alert alert-primary">'.$this->lang->line('alert_insert').'</div>';
 					$this->session->set_flashdata('item', $value);
 					redirect(base_url().'item_stores/create/'.$update_id);
 				}
@@ -378,6 +395,7 @@ class Item_stores extends MX_Controller
 		if((is_numeric($update_id)) && ($submit!="Submit")) {
 			$data = $this->get_data_from_db($update_id);
 			$data['update_id'] = $update_id;
+			$data['got_gallery_pics'] = $this->_got_gallery_pics($update_id);
 
 		} else {
 			$data = $this->get_post_data();
@@ -385,17 +403,31 @@ class Item_stores extends MX_Controller
 		}
 
 		if(! is_numeric($update_id)) {
-			$data['head_line'] = 'Add New Product';
+			$data['head_line'] = $this->lang->line('add_new_item');
 		} else {
-			$data['head_line'] = 'Update Product';
+			$data['head_line'] = $this->lang->line('update_item');
 		}
 		
+
 		$data['flash'] = $this->session->flashdata('item');
 		$data['module'] = 'item_stores';
 		$data['view_file'] = 'create';
 
 		$this->load->module('templetes');
 		$this->templetes->admin($data);
+	}
+
+	function _got_gallery_pics($update_id) {
+		$this->load->module('item_galleries');
+		$query = $this->item_galleries->get_where_custom('parent_id', $update_id);
+		$num_rows = $query->num_rows();
+		if($num_rows >0) {
+			
+			return TRUE;
+		} else {
+			
+			return FALSE;
+		}
 	}
 
 	function get_post_data() {

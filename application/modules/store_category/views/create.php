@@ -37,11 +37,10 @@
         	  <input type="text" name="cat_name" value="<?php echo $cat_name; ?>" class="form-control" placeholder="Enter Title Of Category">
         	</div>
 
-      	</div>
-      </div> <!-- End .row -->
+      
+    
 
-    </div> <!-- End .box-body -->
-
+    
 	<div class="clearfix"></div>
             
      <center>
@@ -50,6 +49,9 @@
         <button type="submit" class="btn btn-lg btn-danger" name="submit" value="Cancel">Cancel</button>
     </div>
     </center>
-</div> <!-- End .box -->
-</form>
 
+</form>
+  </div>
+</div> <!-- End .box -->
+  </div> <!-- End .row -->
+</div> <!-- End .box-body -->

@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+date_default_timezone_set('Africa/Cairo');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -521,3 +523,12 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+	
+spl_autoload_register(function ($class) {
+    if (substr($class,0,3) !== 'CI_') {
+        if (file_exists($file = APPPATH . 'core/' . $class . '.php')) {
+            include $file;
+        }
+    }
+});

@@ -3,7 +3,7 @@
       <h3 class="box-title"><?= $head_line ?></h3>
     </div>
     <div class="box-body">
-	<p>Please Upload Image From Your Computer</p>
+	<p><?= $this->lang->line('choose_file'); ?></p>
     <?php 
        	if (isset($error)) {
     	 	foreach ($error as $key => $value) {
@@ -18,8 +18,8 @@
 
 	<br /><br />
 
-	<input type="submit" name="submit" class="btn btn-primary" value="Upload" />
-	<input style="margin-left: 5px" name="submit" type="submit" class="btn btn-default" value="Cancel" />
+	<input type="submit" name="submit" class="btn btn-primary" value="<?= $this->lang->line('upload'); ?>" />
+	<input style="margin-left: 5px" name="submit" type="submit" class="btn btn-default" value="<?= $this->lang->line('cancel'); ?>" />
 
 	</form>
 	</div>

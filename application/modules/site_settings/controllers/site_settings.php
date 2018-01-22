@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Site_settings extends MX_Controller
+class Site_settings extends MY_Backend
 {
 
 	function __construct() {
@@ -46,6 +46,21 @@ class Site_settings extends MX_Controller
 	    $msg .= "please check your vibe and try again";
 
 	    return $msg;
+    }
+
+    function _get_currency_symbol() {
+    	$curreny_symbol = '&pound;'; //USD , Eurrop
+    	return $curreny_symbol;
+    }
+
+    function _get_currency_code() {
+    	$code = 'GPA'; //USD , Eurrop
+    	return $code;
+    }
+
+    function _get_paypal_email() {
+    	$paypal_email = 'dev.eslam@gmail.com';
+    	return $paypal_email;
     }
 
 }

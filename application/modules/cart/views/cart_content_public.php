@@ -3,15 +3,15 @@
 		<table class="table table-striped table-bordered">
 			<?php
 				$grand_total = 0;
-				
-				foreach ($query1->result() as $row) {
+				$first_bit = $this->uri->segment(2);
+				foreach ($query_dcd->result() as $row) {
 					
 				$price = $row->price;
 				$Price = number_format($price, 2);
 				$sub_total = $row->price*$row->item_qty;
 				$sub_total_desc = number_format($sub_total, 2);
-
-				$grand_total .= $sub_total;
+				
+				$grand_total = $grand_total + $sub_total;
 
 			?>
 			<tr>
@@ -24,20 +24,33 @@
 					Item Price: $<?= $price ?><br><br>
 					QUANTITY: <?= $row->item_qty ?><br><br>
 					<?php
+					if($first_bit == 'yourorders') {
 					echo anchor(base_url().'cart/remove/'.$row->id, 'Remove');
+					}
 					?>
 				</td>
+				
 				<td class="col-md-2"><?= $sub_total_desc ?></td>
 
 			</tr>
 			<?php  } ?>
+			<tr>
+				<td colspan="2" style="text-align: right;font-weight: bold">Shipping: </td>
+				<td style="font-weight: bold">
+					<?php 
+					echo $shipping;
+					$grand_total = $grand_total + $shipping;
+					?>
+				</td>
+			</tr>
 			<tr>
 
 				<td colspan="2" style="text-align: right;font-weight: bold">total</td>
 				<td style="font-weight: bold">
 					<?php
 						$grand_total_desc = number_format($grand_total, 2);
-						echo $grand_total_desc;
+
+						echo $grand_total_desc ;
 					?>
 				</td>
 			</tr>

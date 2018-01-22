@@ -9,15 +9,28 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>admin_files/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <?php if($this->session->lang == 'ar'){  ?>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>admin_files/bower_components/bootstrap/dist/css/bootstrap-rtl.css">
+   <?php } ?>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>admin_files/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>admin_files/bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?php echo base_url(); ?>admin_files/dist/css/AdminLTE.min.css">
+ 
+    <?php if($this->session->lang == 'ar') { ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>admin_files/dist/css/AdminLTE-rtl.css">
+  <?php } else { ?>
+ <link rel="stylesheet" href="<?php echo base_url(); ?>admin_files/dist/css/AdminLTE.min.css">
+  <?php } ?>
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="<?php echo base_url(); ?>admin_files/dist/css/skins/_all-skins.min.css">
+  
+   <?php if($this->session->lang == 'ar') { ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>admin_files/dist/css/skins/_all-skins-rtl.css"> 
+<?php } else { ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>admin_files/dist/css/skins/_all-skins.min.css">
+<?php } ?>
   <!-- Morris chart -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>admin_files/bower_components/morris.js/morris.css">
   <!-- jvectormap -->
@@ -49,9 +62,9 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="<?= base_url() ?>dashboard/home" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini"><b>SH</b></span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>SH</b>OP</span>
     </a>
@@ -264,21 +277,21 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="<?php echo base_url(); ?>admin_files/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
+              <img src="<?php echo base_url(); ?>users_pics/<?= $picture_useradmin ?>" class="user-image" alt="User Image">
+              <span class="hidden-xs"><?= $name_useradmin ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="<?php echo base_url(); ?>admin_files/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="<?php echo base_url(); ?>users_pics/<?= $picture_useradmin ?>" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  <?= $name_useradmin ?> - <?= $function_useradmin ?>
+                  <small>Member <?= $date_created_useradmin ?></small>
                 </p>
               </li>
               <!-- Menu Body -->
-              <li class="user-body">
+             <!--  <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
                     <a href="#">Followers</a>
@@ -290,15 +303,15 @@
                     <a href="#">Friends</a>
                   </div>
                 </div>
-                <!-- /.row -->
-              </li>
+
+              </li> -->
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="<?= base_url() ?>dvilsf/logout" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -318,17 +331,17 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="<?php echo base_url(); ?>admin_files/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="<?php echo base_url(); ?>users_pics/<?= $picture_useradmin ?>" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p><?= $name_useradmin ?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
       <!-- search form -->
       <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
+          <input type="text" name="q" class="form-control" placeholder="<?= $this->lang->line('search'); ?>">
           <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                 </button>
@@ -338,254 +351,197 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
+        <li class="header"><?= $this->lang->line('main_nav'); ?></li>
+
         <li class="">
               <a href="<?php echo base_url(); ?>dashboard/home">
-                  <i class="fa fa-tachometer fa-fw"></i> Dashboard
+                  <i class="fa fa-tachometer fa-fw"></i> <?= $this->lang->line('dashboard'); ?>
                  
               </a>
              
           </li>
+          <?php if($show_items == TRUE) { ?>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-tags"></i> <span>Items Shop</span>
+            <i class="fa fa-tags"></i> <span><?= $this->lang->line('item_shop'); ?></span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="<?= base_url() ?>item_stores/manage"><i class="fa fa-circle-o"></i> Manage Items</a></li>
-            <li><a href="<?= base_url() ?>item_stores/create"><i class="fa fa-circle-o"></i> Create New Item</a></li>
+            <li class="active"><a href="<?= base_url() ?>item_stores/manage"><i class="fa fa-circle-o"></i><?= $this->lang->line('manage_item'); ?></a></li>
+            <li><a href="<?= base_url() ?>item_stores/create"><i class="fa fa-circle-o"></i> <?= $this->lang->line('create_new_item'); ?></a></li>
           </ul>
         </li>
-          <li class="treeview">
-              <a href="#">
-                  <i class="fa fa-file"></i> <span>CMS</span>
-                  <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-              </a>
-              <ul class="treeview-menu">
-                  <li class="active"><a href="<?= base_url() ?>web_pages/manage"><i class="fa fa-circle-o"></i> Manage Web Pages</a></li>
-                  <li><a href="<?= base_url() ?>web_pages/create"><i class="fa fa-circle-o"></i> Create New A Web Page</a></li>
-              </ul>
-          </li>
-          <li class="treeview">
-              <a href="#">
-                  <i class="fa fa-file-o"></i> <span>Blogs</span>
-                  <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-              </a>
-              <ul class="treeview-menu">
-                  <li class="active"><a href="<?= base_url() ?>blogs/manage"><i class="fa fa-circle-o"></i> Blogs Manage</a></li>
-                  <li><a href="<?= base_url() ?>blogs/create"><i class="fa fa-circle-o"></i> Create New Blog</a></li>
-              </ul>
-          </li>
+        <?php } ?>
+         <?php if($show_orders == TRUE) { ?>
+        <?= Modules::run('store_orders/_left_nav_link') ?>
+        <?php } ?>
+          <?php if($show_order_status == TRUE) { ?>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-briefcase"></i> <span>Accounts</span>
+            <i class="fa fa-check-circle"></i> <span><?= $this->lang->line('order_status_options'); ?></span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            <ul class="treeview-menu">
+            <li class="active"><a href="<?= base_url() ?>store_order_status/manage"><i class="fa fa-circle-o"></i> <?= $this->lang->line('manage'); ?> <?= $this->lang->line('order_status_options'); ?></a></li>
+            <li><a href="<?= base_url() ?>store_order_status/create"><i class="fa fa-circle-o"></i> <?= $this->lang->line('create_new'); ?> <?= $this->lang->line('order_status_options'); ?></a></li>
+          </ul>
+          </a>
+        </li>
+        <?php } ?>
+        <?php if($show_sliders == TRUE) { ?>
+          <li class="treeview">
+              <a href="#">
+                  <i class="fa fa-sliders"></i> <span><?= $this->lang->line('slider'); ?></span>
+                  <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+              </a>
+              <ul class="treeview-menu">
+                  <li class="active"><a href="<?= base_url() ?>slider/manage"><i class="fa fa-circle-o"></i> <?= $this->lang->line('manage'); ?> <?= $this->lang->line('slider'); ?></a></li>
+                  <li><a href="<?= base_url() ?>slider/create"><i class="fa fa-circle-o"></i><?= $this->lang->line('create_new'); ?> <?= $this->lang->line('slider'); ?></a></li>
+              </ul>
+          </li>
+          <?php } ?>
+           <?php if($show_home_blocks == TRUE) { ?>
+          <li class="treeview">
+              <a href="#">
+                  <i class="fa fa-star"></i> <span><?= $this->lang->line('homepage_blocks'); ?></span>
+                  <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+              </a>
+              <ul class="treeview-menu">
+                  <li class="active"><a href="<?= base_url() ?>homepage_blocks/manage"><i class="fa fa-circle-o"></i> <?= $this->lang->line('manage'); ?> <?= $this->lang->line('homepage_blocks'); ?></a></li>
+                  <li><a href="<?= base_url() ?>homepage_blocks/create"><i class="fa fa-circle-o"></i> <?= $this->lang->line('create_new'); ?> <?= $this->lang->line('homepage_blocks'); ?></a></li>
+              </ul>
+          </li>
+          <?php } ?>
+       <?php if($show_delivers == TRUE) { ?>
+        <li class="treeview">
+              <a href="#">
+                  <i class="fa fa-cab"></i> <span><?= $this->lang->line('shipping'); ?></span>
+                  <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+              </a>
+              <ul class="treeview-menu">
+                  <li class="active"><a href="<?= base_url() ?>store_shippers/manage"><i class="fa fa-circle-o"></i> <?= $this->lang->line('manage'); ?> <?= $this->lang->line('shipping'); ?></a></li>
+                  <li><a href="<?= base_url() ?>store_shippers/create"><i class="fa fa-circle-o"></i> <?= $this->lang->line('create_new'); ?> <?= $this->lang->line('shipping'); ?></a></li>
+              </ul>
+          </li>
+          <?php } ?>
+          <?php if($show_webpages == TRUE) { ?>
+          <li class="treeview">
+              <a href="#">
+                  <i class="fa fa-file"></i> <span><?= $this->lang->line('CMS'); ?></span>
+                  <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+              </a>
+              <ul class="treeview-menu">
+                  <li class="active"><a href="<?= base_url() ?>web_pages/manage"><i class="fa fa-circle-o"></i> <?= $this->lang->line('manage'); ?> <?= $this->lang->line('web_pages'); ?></a></li>
+                  <li><a href="<?= base_url() ?>web_pages/create"><i class="fa fa-circle-o"></i> <?= $this->lang->line('create_new'); ?> <?= $this->lang->line('web_pages'); ?></a></li>
+              </ul>
+          </li>
+          <?php } ?>
+
+           <?php if($show_btm_nav == TRUE) { ?>
+          <li class="">
+              <a href="<?= base_url() ?>btm_nav/manage">
+                  <i class="fa fa-navicon"></i> <span><?= $this->lang->line('manage'); ?> <?= $this->lang->line('bottom_navigation'); ?></span>
+                  
+              </a>
+             
+          </li>
+          <?php } ?>
+          <?php if($show_blogs == TRUE) { ?>
+          <li class="treeview">
+              <a href="#">
+                  <i class="fa fa-file-o"></i> <span><?= $this->lang->line('blogs'); ?></span>
+                  <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+              </a>
+              <ul class="treeview-menu">
+                  <li class="active"><a href="<?= base_url() ?>blogs/manage"><i class="fa fa-circle-o"></i><?= $this->lang->line('manage'); ?> <?= $this->lang->line('blogs'); ?></a></li>
+                  <li><a href="<?= base_url() ?>blogs/create"><i class="fa fa-circle-o"></i> <?= $this->lang->line('create'); ?> <?= $this->lang->line('blogs'); ?></a></li>
+              </ul>
+          </li>
+          <?php } ?>
+           <?php if($show_accounts == TRUE) { ?>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-briefcase"></i> <span><?= $this->lang->line('accounts'); ?></span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            <ul class="treeview-menu">
+            <li class="active"><a href="<?= base_url() ?>store_accounts/manage"><i class="fa fa-circle-o"></i> <?= $this->lang->line('manage'); ?> <?= $this->lang->line('accounts'); ?></a></li>
+            <li><a href="<?= base_url() ?>store_accounts/create"><i class="fa fa-circle-o"></i> <?= $this->lang->line('create_new'); ?> <?= $this->lang->line('accounts'); ?></a></li>
+          </ul>
+          </a>
+         
+        </li>
+        <?php } ?>
+        <?php if($show_categories == TRUE) { ?>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-tag"></i> <span><?= $this->lang->line('categories'); ?></span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-          <li class="treeview">
-              <a href="#">
-                  <i class="fa fa-star"></i> <span>Homepage Blocks</span>
-                  <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-              </a>
-              <ul class="treeview-menu">
-                  <li class="active"><a href="<?= base_url() ?>homepage_blocks/manage"><i class="fa fa-circle-o"></i> Manage Homepage Blocks</a></li>
-                  <li><a href="<?= base_url() ?>homepage_blocks/create"><i class="fa fa-circle-o"></i> Create New Homepage Block</a></li>
-              </ul>
-          </li>
           <ul class="treeview-menu">
-            <li class="active"><a href="<?= base_url() ?>store_accounts/manage"><i class="fa fa-circle-o"></i> Manage Accounts</a></li>
-            <li><a href="<?= base_url() ?>store_accounts/create"><i class="fa fa-circle-o"></i> Create New Account</a></li>
+            <li class="active"><a href="<?= base_url() ?>store_category/manage"><i class="fa fa-circle-o"></i> <?= $this->lang->line('manage'); ?> <?= $this->lang->line('categories'); ?></a></li>
+            <li><a href="<?= base_url() ?>store_category/create"><i class="fa fa-circle-o"></i><?= $this->lang->line('create_new'); ?> <?= $this->lang->line('category'); ?></a></li>
           </ul>
         </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-tag"></i> <span>Categories</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="active"><a href="<?= base_url() ?>store_category/manage"><i class="fa fa-circle-o"></i> Manage Categories</a></li>
-            <li><a href="<?= base_url() ?>store_category/create"><i class="fa fa-circle-o"></i> Create New Category</a></li>
-          </ul>
-        </li>
+        <?php } ?>
+         <?php if($show_enquiries == TRUE) { ?>
          <li class="treeview">
               <a href="#">
-                  <i class="fa fa-envelope fa-fw"></i> <span>Messages</span>
+                  <i class="fa fa-envelope fa-fw"></i> <span><?= $this->lang->line('messages'); ?></span>
                   <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
               </a>
               <ul class="treeview-menu">
-                  <li class="active"><a href="<?= base_url() ?>enquiries/manage"><i class="fa fa-circle-o"></i> Manage Enquiries</a></li>
-                  <li><a href="<?= base_url() ?>enquiries/create"><i class="fa fa-circle-o"></i> Compose Message</a></li>
+                  <li class="active"><a href="<?= base_url() ?>enquiries/manage"><i class="fa fa-circle-o"></i> <?= $this->lang->line('manage'); ?> <?= $this->lang->line('messages'); ?></a></li>
+                  <li><a href="<?= base_url() ?>enquiries/create"><i class="fa fa-circle-o"></i> <?= $this->lang->line('compose_message'); ?></a></li>
               </ul>
           </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-files-o"></i>
-            <span>Layout Options</span>
-            <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-            <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-            <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-            <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="pages/widgets.html">
-            <i class="fa fa-th"></i> <span>Widgets</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-green">new</small>
-            </span>
-          </a>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-pie-chart"></i>
-            <span>Charts</span>
-            <span class="pull-right-container">
+          <?php } ?>
+           <?php if($show_right_access == TRUE) { ?>
+           <li class="treeview">
+              <a href="#">
+                  <i class="fa fa-check-square-o fa-fw"></i> <span><?= $this->lang->line('right_of_access'); ?></span>
+                  <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-            <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-            <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-            <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-laptop"></i>
-            <span>UI Elements</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> General</a></li>
-            <li><a href="pages/UI/icons.html"><i class="fa fa-circle-o"></i> Icons</a></li>
-            <li><a href="pages/UI/buttons.html"><i class="fa fa-circle-o"></i> Buttons</a></li>
-            <li><a href="pages/UI/sliders.html"><i class="fa fa-circle-o"></i> Sliders</a></li>
-            <li><a href="pages/UI/timeline.html"><i class="fa fa-circle-o"></i> Timeline</a></li>
-            <li><a href="pages/UI/modals.html"><i class="fa fa-circle-o"></i> Modals</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-edit"></i> <span>Forms</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i> General Elements</a></li>
-            <li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
-            <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-table"></i> <span>Tables</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="pages/tables/simple.html"><i class="fa fa-circle-o"></i> Simple tables</a></li>
-            <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Data tables</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="pages/calendar.html">
-            <i class="fa fa-calendar"></i> <span>Calendar</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-red">3</small>
-              <small class="label pull-right bg-blue">17</small>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a href="pages/mailbox/mailbox.html">
-            <i class="fa fa-envelope"></i> <span>Mailbox</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-yellow">12</small>
-              <small class="label pull-right bg-green">16</small>
-              <small class="label pull-right bg-red">5</small>
-            </span>
-          </a>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-folder"></i> <span>Examples</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="pages/examples/invoice.html"><i class="fa fa-circle-o"></i> Invoice</a></li>
-            <li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> Profile</a></li>
-            <li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Login</a></li>
-            <li><a href="pages/examples/register.html"><i class="fa fa-circle-o"></i> Register</a></li>
-            <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> Lockscreen</a></li>
-            <li><a href="pages/examples/404.html"><i class="fa fa-circle-o"></i> 404 Error</a></li>
-            <li><a href="pages/examples/500.html"><i class="fa fa-circle-o"></i> 500 Error</a></li>
-            <li><a href="pages/examples/blank.html"><i class="fa fa-circle-o"></i> Blank Page</a></li>
-            <li><a href="pages/examples/pace.html"><i class="fa fa-circle-o"></i> Pace Page</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-share"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-            <li class="treeview">
-              <a href="#"><i class="fa fa-circle-o"></i> Level One
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                <li class="treeview">
-                  <a href="#"><i class="fa fa-circle-o"></i> Level Two
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                  </ul>
-                </li>
+                  <li class="active"><a href="<?= base_url() ?>store_roles/manage"><i class="fa fa-circle-o"></i> <?= $this->lang->line('manage'); ?> <?= $this->lang->line('right_of_access'); ?></a></li>
+                  <li><a href="<?= base_url() ?>store_roles/create"><i class="fa fa-circle-o"></i> <?= $this->lang->line('create_new'); ?> <?= $this->lang->line('right_of_access'); ?></a></li>
               </ul>
-            </li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-          </ul>
-        </li>
-        <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
-        <li class="header">LABELS</li>
-        <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+          </li>
+          <?php } ?>
+            <?php if($show_users == TRUE) { ?>
+       <li class="treeview">
+              <a href="#">
+                  <i class="fa fa-users fa-fw"></i> <span><?= $this->lang->line('users'); ?></span>
+                  <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+              </a>
+              <ul class="treeview-menu">
+                  <li class="active"><a href="<?= base_url() ?>store_users/manage"><i class="fa fa-circle-o"></i> <?= $this->lang->line('manage'); ?> <?= $this->lang->line('users'); ?></a></li>
+                  <li><a href="<?= base_url() ?>store_users/create"><i class="fa fa-circle-o"></i> <?= $this->lang->line('create_new'); ?> <?= $this->lang->line('user'); ?></a></li>
+              </ul>
+          </li>
+       <?php } ?>
       </ul>
     </section>
     <!-- /.sidebar -->

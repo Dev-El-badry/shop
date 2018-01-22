@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Clothes extends MX_Controller
+class Clothes extends MY_Backend
 {
 
 	function __construct() {

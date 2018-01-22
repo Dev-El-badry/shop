@@ -1,9 +1,10 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Store_item_colors extends MX_Controller
+class Store_item_colors extends MY_Backend
 {
 
 	function __construct() {
 	parent::__construct();
+	$this->lang->load('admin/store_items');
 	}
 
 	function _delete_conif($item_id) {
@@ -26,7 +27,7 @@ class Store_item_colors extends MX_Controller
 		}
 
 		$this->_delete($update_id);
-		$value = '<div class="alert alert-danger" role="alert">Successfully Delete Option</div>';
+		$value = '<div class="alert alert-danger" role="alert">'.$this->lang->line('').'</div>';
 		$this->session->set_flashdata('item', $value);
 		redirect(base_url().'store_item_colors/update/'.$item_id);
 	}
@@ -53,7 +54,7 @@ class Store_item_colors extends MX_Controller
 				$this->_insert($data);
 
 				
-				$value = '<div class="alert alert-success" role="alert">Successfully Add New Color Option</div>';
+				$value = '<div class="alert alert-success" role="alert">'.$this->lang->line('alert_delete_options_color').'</div>';
 				$this->session->set_flashdata('item', $value);
 				redirect(base_url().'store_item_colors/update/'.$update_id);
 			}
@@ -63,7 +64,7 @@ class Store_item_colors extends MX_Controller
 		$data['num_rows'] = $data['query']->num_rows();
 
         $data['update_id'] 	= $update_id;
-		$data['head_line'] 	= 'New Color Option';
+		$data['head_line'] 	= $this->lang->line('new_color_option');
 		$data['module'] 	= 'store_item_colors';
 		$data['view_file'] 	= 'update';
 

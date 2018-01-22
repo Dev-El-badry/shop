@@ -5,10 +5,10 @@
     <div class="box-body">
     <form class="form-group" method="post" action="<?= base_url() ?>web_pages/delete/<?= $update_id ?>">
     	<input type="hidden" name="update_id" value="<?= $update_id ?>" />
-		<p>Are You Sure To Delete Webpage Record?</p>
+		<p><?= $this->lang->line('are_sure') ?></p>
 		<hr>
 
-		<input type="submit" name="submit" class="btn btn-danger" value="Yes - Delete Item Record" />
-		<input style="margin-left: 5px" name="submit" type="submit" class="btn btn-default" value="Cancel" />
+		<input type="submit" name="submit" class="btn btn-danger" value="<?= $this->lang->line('submit_del') ?>" />
+		<input style="margin-left: 5px" name="submit" type="submit" class="btn btn-default" value="<?= $this->lang->line('cancel') ?>" />
 	</form>
 </div>

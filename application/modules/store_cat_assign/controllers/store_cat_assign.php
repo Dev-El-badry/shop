@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Store_cat_assign extends MX_Controller
+class Store_cat_assign extends MY_Backend
 {
 
 	function __construct() {

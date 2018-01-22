@@ -1,9 +1,10 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Store_item_sizes extends MX_Controller
+class Store_item_sizes extends MY_Backend
 {
 
 	function __construct() {
 	parent::__construct();
+	$this->lang->load('admin/store_items');
 	}
 
 
@@ -27,7 +28,7 @@ class Store_item_sizes extends MX_Controller
 		}
 
 		$this->_delete($id);
-		$value = '<div class="alert alert-danger" role="alert">Successfully Delete Option</div>';
+		$value = '<div class="alert alert-danger" role="alert">'.$this->lang->line('alert_delete_options').'</div>';
 		$this->session->set_flashdata('item', $value);
 		redirect(base_url().'store_item_sizes/update/'.$item_id);
 	}
@@ -42,6 +43,7 @@ class Store_item_sizes extends MX_Controller
 		$new_option = trim($this->input->post('new_option', true));
 
 		if($submit == "Finished") {
+			$update_id = $this->input->post('update_id', true);
 			redirect(base_url().'item_stores/create/'.$update_id);
 		}elseif($submit == "Submit"){
 
@@ -53,7 +55,7 @@ class Store_item_sizes extends MX_Controller
 				$this->_insert($data);
 
 				
-				$value = '<div class="alert alert-success" role="alert">Successfully Add New Size Option</div>';
+				$value = '<div class="alert alert-success" role="alert">'.$this->lang->line('alert_add_size').'</div>';
 				$this->session->set_flashdata('item', $value);
 				redirect(base_url().'store_item_sizes/update/'.$update_id);
 			}
@@ -63,7 +65,7 @@ class Store_item_sizes extends MX_Controller
 		$data['num_rows'] = $data['query']->num_rows();
 
         $data['update_id'] 	= $update_id;
-		$data['head_line'] 	= 'New Size Option';
+		$data['head_line'] 	= $this->lang->line('new_size_option');
 		$data['module'] 	= 'store_item_sizes';
 		$data['view_file'] 	= 'update';
 

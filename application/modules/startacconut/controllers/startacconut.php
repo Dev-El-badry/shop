@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Startacconut extends MX_Controller
+class Startacconut extends MY_Backend
 {
 
 	function __construct() {
@@ -205,10 +205,10 @@ class Startacconut extends MX_Controller
            $data = $this->_get_data_from_db();
 
 
-           $this->form_validation->set_rules('username', 'Username', 'required|min_length[4]|max_length[60]|is_unique[store_accounts.username]');
+           $this->form_validation->set_rules('username', 'Username', 'required|min_length[4]|max_length[60]');
            $this->form_validation->set_rules('email', 'E-mail', 'required|valid_email');
            $this->form_validation->set_rules('pword', 'Password', 'required|trim');
-           $this->form_validation->set_rules('re_pword', 'E-mail', 'required|matches[pword]');
+           $this->form_validation->set_rules('re_pword', 're_pword', 'required|matches[pword]');
 
            if($this->form_validation->run() == TRUE) {
 

@@ -11,9 +11,9 @@
         <form class="form-signin" action="<?= $form_action ?>" method="post" >
             <h2 class="form-signin-heading">Sign In</h2><br />
             <label for="inputEmail" class="sr-only">Email address / Username</label>
-            <input type="text" id="inputEmail" class="form-control input-lg" placeholder="Email address OR Username" name="username"  autofocus><br />
+            <input type="text" id="inputEmail" autocomplete="off" class="form-control input-lg" placeholder="Email address OR Username" name="username"  autofocus><br />
             <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" name="pword" class="form-control input-lg" placeholder="Password" ><br />
+            <input type="password" autocomplete="off"  id="inputPassword" name="pword" class="form-control input-lg" placeholder="Password" ><br />
             <?php if($first_bit == 'startacconut') { ?>
             <div class="checkbox">
                 <label>

@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Timedate extends MX_Controller
+class Timedate extends MY_Backend
 {
 
 	function __construct() {

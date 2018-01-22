@@ -1,6 +1,13 @@
-<h3>Would You Like To Create Account With Us? </h3>
-
-<div class="" style="margin-top: 36px; text-align: center">
+<h2>Please Create An Account</h2>
+<p>You do not need to create an account with us, however, if you do then you'll be able to enjoy</p>
+<ul>
+	<li>Order Tracking</li>
+	<li>Downloadable Order Forms</li>
+	<li>Priority Technical Support</li>
+</ul>
+<p>Createing An Account Only Takes A Minute Or So And It's Good Vibe</p>
+<p>Would You Like To Create Account With Us? </p>
+<div class="" style="margin-top: 36px; ">
 	<?php
 	$form_location = base_url().'cart/submit_chiose';
 	echo form_open($form_location);

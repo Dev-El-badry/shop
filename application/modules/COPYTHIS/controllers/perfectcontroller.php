@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Perfectcontroller extends MX_Controller
+class Perfectcontroller extends MY_Backend
 {
 
 	function __construct() {

@@ -1,9 +1,10 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Site_secuirty extends MX_Controller
+class Site_secuirty extends MY_Backend
 {
 	function __construct() {
 	parent::__construct();
 	}
+
 
 	function _check_admin_login_admin_details($username, $password) {
 		$target_username = "admin";
@@ -39,6 +40,7 @@ class Site_secuirty extends MX_Controller
 	function _get_user_id() {
 		
 	   $user_id = $this->session->userdata('user_id');
+	   
 	   if(!is_numeric($user_id)) {
 	       //get user_id from cookies
            $this->load->module('site_cookie');

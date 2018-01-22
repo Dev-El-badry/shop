@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Store_category extends MX_Controller
+class Store_category extends MY_Backend
 {
 	function __construct() {
 		parent::__construct();
@@ -160,12 +160,13 @@ class Store_category extends MX_Controller
     }
 
 	function _navbar_bootstrap() {
+		
 		$sql_query = "select * from stores_category where cat_parent_id = 0 order by cat_name";
 		$data['query'] = $this->_custom_query($sql_query);
 
 		$this->load->module('site_settings');
 		$data['target_url_start'] = base_url().$this->site_settings->_get_items_segments();
-
+		
 		$this->load->view('navbar', $data);
 	}
 

@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Cart extends MX_Controller
+class Cart extends MY_Backend
 {
 
 	function __construct() {
@@ -61,8 +61,32 @@ class Cart extends MX_Controller
 		if($submit == "Yes-Let's Do It") {
 			redirect('startacconut/start');
 		}elseif($submit == "No-Thanks") {
+			$this->_generate_guest_account($checkout_token);
 			redirect('cart/index/'.$checkout_token);
 		}
+	}
+
+	function _generate_guest_account($checkout_token){
+		//Customer Has Selected No-Thanks
+		$this->load->module('store_accounts');
+		$this->load->module('site_secuirty');
+		$session_id = $this->_get_session_id_from_token($checkout_token);
+
+		//Create Guest Account
+		$ref = $this->site_secuirty->RandomString(4);
+		$data['username'] = 'Guest-'.$ref;
+		$data['fistname'] = 'Guest';
+		$data['lastname'] = 'Account';
+		$data['date_mode'] = time();
+		$data['pword'] = $checkout_token;
+		$this->store_accounts->_insert($data);
+
+		//Get The New Account ID
+		$new_account_id = $this->store_accounts->get_max();
+
+		//Update The Existing store_basket table
+		$sql_query = "update store_basket set shopper_id=$new_account_id where session_id='$session_id'";
+		$this->store_accounts->_custom_query($sql_query);
 	}
 
 	function go_to_checkout() {
@@ -84,7 +108,8 @@ class Cart extends MX_Controller
 	}
 
 	function _draw_checkout_btn_real($query) {
-		echo '<p style="text-align: center">Real Checkout Buttin Here</p>';
+		$this->load->module('payment');
+		$this->payment->_draw_payment_btn($query);
 	}
 
 	function _attampt_draw_checkout_btn($query1) {
@@ -132,13 +157,15 @@ class Cart extends MX_Controller
 	}
 
 	function _draw_cart_content($user_type, $query) {
-		
+		$this->load->module('shipping');
 		if($user_type == "public") {
 			$view_file = "cart_content_public";
 		} else {
 			$view_file = "cart_content_admin";
 		}
-		$data['query'] = $query;
+		$data['shipping'] = $this->shipping->_get_shipping();
+		
+		$data['query_dcd'] = $query;
 		$this->load->view($view_file, $data);
 	}
 
@@ -177,7 +204,7 @@ class Cart extends MX_Controller
 		$sql_query = "
 		select $table.*, item_stores.small_img, item_stores.url_item
 		from $table
-		LEFT JOIN item_stores ON store_basket.item_id = item_stores.id
+		LEFT JOIN item_stores ON $table.item_id = item_stores.id
 		";
 		if($shopper_id >1) {
 			$where_sql = " where shopper_id = $shopper_id ";

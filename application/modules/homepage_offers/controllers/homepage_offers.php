@@ -1,11 +1,12 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Homepage_offers extends MX_Controller
+class Homepage_offers extends MY_Backend
 {
 
 	function __construct() {
 	parent::__construct();
 
         $this->load->module('site_settings');
+        $this->lang->load('admin/home_blocks');
 	}
 
 	function _draw_offer($id) {
@@ -50,7 +51,7 @@ class Homepage_offers extends MX_Controller
 		}
 
 		$this->_delete($update_id);
-		$value = '<div class="alert alert-danger" role="alert">Successfully Delete Option</div>';
+		$value = '<div class="alert alert-danger" role="alert">'.$this->lang->line('delete_option').'</div>';
 		$this->session->set_flashdata('item', $value);
 		redirect(base_url().'homepage_offers/update/'.$block_id);
 	}
@@ -77,7 +78,7 @@ class Homepage_offers extends MX_Controller
 				$this->_insert($data);
 
 				
-				$value = '<div class="alert alert-success" role="alert">Successfully Add New offer Option</div>';
+				$value = '<div class="alert alert-success" role="alert">'.$this->lang->line('alert_add_offer').'</div>';
 				$this->session->set_flashdata('item', $value);
 				redirect(base_url().'homepage_offers/update/'.$update_id);
 			}
@@ -87,7 +88,7 @@ class Homepage_offers extends MX_Controller
 		$data['num_rows'] = $data['query']->num_rows();
 
         $data['update_id'] 	= $update_id;
-		$data['head_line'] 	= 'New offer';
+		$data['head_line'] 	= $this->lang->line('new_offer');
 		$data['module'] 	= 'homepage_offers';
 		$data['view_file'] 	= 'update';
 

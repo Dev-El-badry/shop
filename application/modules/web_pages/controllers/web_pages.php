@@ -1,10 +1,12 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Web_pages extends MX_Controller
+class Web_pages extends MY_Backend
 {
 
 	function __construct() {
 	parent::__construct();
+    $this->lang->load('admin/cms');
 	}
+
 
     public function _delete_process($id_item) {
 
@@ -25,7 +27,7 @@ class Web_pages extends MX_Controller
         if($submit == "Cancel") {
 
             redirect(base_url().'web_pages/manage');
-        } elseif ($submit == "Yes - Delete Item Record") {
+        } elseif ($submit == $this->lang->line('submit_del')) {
             $item_id = $this->input->post('update_id');
             // Delete Item
             if($item_id > 2)  {
@@ -33,7 +35,7 @@ class Web_pages extends MX_Controller
             }
 
 
-            $value = '<div class="alert alert-danger" role="alert">Successfully Delete Webpage Record</div>';
+            $value = '<div class="alert alert-danger" role="alert">'.$this->lang->line('alert_del').'</div>';
             $this->session->set_flashdata('item', $value);
 
 
@@ -53,7 +55,7 @@ class Web_pages extends MX_Controller
         }
 
         $data['update_id'] = $update_id;
-        $data['head_line'] = 'Delete Page';
+        $data['head_line'] = $this->lang->line('head_line_del');
         $data['flash'] = $this->session->flashdata('item');
         $data['module'] = 'web_pages';
         $data['view_file'] = 'deleteconif';
@@ -77,8 +79,8 @@ class Web_pages extends MX_Controller
 
             //Process The Form
             $this->load->library('form_validation');
-            $this->form_validation->set_rules('page_title', 'Page Title', 'required|max_length[240]');
-            $this->form_validation->set_rules('page_content', 'Page Content', 'required');
+            $this->form_validation->set_rules('page_title', $this->lang->line('page_title'), 'required|max_length[240]');
+            $this->form_validation->set_rules('page_content', $this->lang->line('page_content'), 'required');
 
             if ($this->form_validation->run() == TRUE) {
                 $data = $this->get_post_data();
@@ -90,7 +92,7 @@ class Web_pages extends MX_Controller
                         }
                     //update data
                     $this->_update($update_id, $data);
-                    $value = '<div class="alert alert-success" role="alert">Successfully Update Data Is Done</div>';
+                    $value = '<div class="alert alert-success" role="alert">'.$this->lang->line('alert_update').'</div>';
                     $this->session->set_flashdata('item', $value);
                     redirect(base_url().'web_pages/create/'.$update_id);
                 } else {
@@ -100,7 +102,7 @@ class Web_pages extends MX_Controller
                     $this->_insert($data);
 
                     $update_id = $this->get_max();
-                    $value = '<div class="alert alert-success" role="alert">Successfully Insert Data Is Done</div>';
+                    $value = '<div class="alert alert-success" role="alert">'.$this->lang->line('alert_insert').'</div>';
                     $this->session->set_flashdata('item', $value);
                     redirect(base_url().'web_pages/create/'.$update_id);
                 }
@@ -122,9 +124,9 @@ class Web_pages extends MX_Controller
         }
 
         if(! is_numeric($update_id)) {
-            $data['head_line'] = 'Add New Page';
+            $data['head_line'] = $this->lang->line('add_new_page');
         } else {
-            $data['head_line'] = 'Update Page';
+            $data['head_line'] = $this->lang->line('update_page');
         }
 
         $data['flash'] = $this->session->flashdata('item');
@@ -151,6 +153,7 @@ class Web_pages extends MX_Controller
         foreach ($query->result() as $row) {
             $data['id'] = $row->id;
             $data['page_title'] = $row->page_title;
+            $data['page_url'] = $row->page_url;
 
             $data['page_description'] = $row->page_description;
             $data['page_content'] = $row->page_content;

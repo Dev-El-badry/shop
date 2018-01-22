@@ -18,8 +18,8 @@
 
 	<br /><br />
 
-	<input type="submit" name="submit" class="btn btn-primary" value="Upload" />
-	<input style="margin-left: 5px" name="submit" type="submit" class="btn btn-default" value="Cancel" />
+	<input type="submit" name="submit" class="btn btn-primary" value="<?= $this->lang->line('upload') ?>" />
+	<input style="margin-left: 5px" name="submit" type="submit" class="btn btn-default" value="<?= $this->lang->line('cancel') ?>" />
 
 	</form>
 	</div>

@@ -1,9 +1,42 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Store_basket extends MX_Controller
+class Store_basket extends MY_Backend
 {
 
 	function __construct() {
 	parent::__construct();
+	}
+
+	/*
+	** _avoid_cart_conflicts function
+	** this is make sure no items on store_shoppertrack
+	** with same session_id and shopper_id
+
+	** IF there are items on shoppertrack with same
+	** and shopper_id, then
+
+	** regenerate there session for this user
+	** update the $data['session_id'] varable
+	*/
+	function _avoid_cart_conflicts($data) {
+		// NOTE: Make Sure Is No Item On store_shoppertrack
+		$this->load->module('store_shoppertrack');
+		$original_session_id = $data['session_id'];
+		$shopper_id = $data['shopper_id'];
+		
+		$col1 = 'session_id';
+		$value1 = $original_session_id;
+		$col2 = 'shopper_id';
+		$value2 = $shopper_id;
+
+		$query = $this->store_shoppertrack->get_double_where_custom($col1, $value1, $col2, $value2);
+		$num_rows = $query->num_rows();
+
+		if($num_rows>0) {
+			session_regenerate_id();
+			$data['session_id'] = $this->session->session_id;
+		}
+
+		return $data;
 	}
 
 	function add_to_basket() {
@@ -24,6 +57,7 @@ class Store_basket extends MX_Controller
 
 				$item_id = $this->input->post('item_id');
 				$data = $this->fetch_data($item_id);
+				$data = $this->_avoid_cart_conflicts($data);
 				$this->_insert($data);
 				
 				redirect(base_url().'cart');
@@ -59,7 +93,7 @@ class Store_basket extends MX_Controller
 		$data['item_size'] = $this->get_value('size', $item_size);
 		$data['item_id'] = $this->input->post('item_id'); 
 		$data['item_qty'] = $this->input->post('item_qty');
-		$data['session_id '] = $this->session->session_id;
+		$data['session_id'] = $this->session->session_id;
 		$data['price'] = $item_price;
 		$data['tax'] = '0';
 		$data['shopper_id'] = $this->site_secuirty->_get_user_id();
@@ -81,14 +115,21 @@ class Store_basket extends MX_Controller
 			foreach ($query->result() as $row) {
 				$size = $row->size;
 			}
-			$value = $size;
+			if(!empty($color)) {
+				$value = $size;
+			}
+			
 		} elseif($value_type == 'color') {
 			$this->load->module('store_item_colors');
 			$query = $this->store_item_colors->get_where($update_id);
+
 			foreach ($query->result() as $row) {
 				$color = $row->color;
 			}
-			$value = $color;	
+			if(!empty($color)) {
+				$value = $color;
+			}
+				
 		}
 
 		if(!isset($value)) {

@@ -3,7 +3,7 @@
       <h3 class="box-title"><?= $head_line ?></h3>
     </div>
     <div class="box-body">
-	<h3 class="alert alert-success">Your Image was successfully uploaded!</h3>
+	<h3 class="alert alert-success"><?= $this->lang->line('successfully_upload') ?></h3>
 
 	<ul>
 		<?php foreach ($upload_data as $item => $value):?>
